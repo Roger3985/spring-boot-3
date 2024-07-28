@@ -1,5 +1,6 @@
 package com.atguigu.boot304web.controller;
 
+import com.atguigu.boot304web.bean.Person;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloController {
 
-    @GetMapping("hello")
+    @GetMapping("/hello")
     public String hello2() {
         return "hello";
     }
@@ -34,5 +35,20 @@ public class HelloController {
         String uri = request.getRequestURI();
         log.info(uri);
         return uri;
+    }
+
+    /**
+     * 1. 默認支持把物件寫為 json。因為默認 web 場景導入了 jackson 處理了 json 包，利用 jackson-core。
+     * 2. jackson 也支持把資料寫為 xml，需要導入 xml 相關依賴。
+     * @return person。
+     */
+    @GetMapping("/person")
+    public Person person() {
+        Person person = new Person();
+        person.setId(1L);
+        person.setUsername("張三");
+        person.setEmail("aaa@qq.com");
+        person.setAge(18);
+        return person;
     }
 }

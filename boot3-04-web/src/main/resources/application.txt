@@ -29,3 +29,11 @@ spring.application.name=boot3-04-web
 
 # 改變路徑匹配策略：ant_path_matcher 老版策略
 # spring.mvc.pathmatch.matching-strategy=ant_path_matcher
+
+# 開啟基於請求參數的內容協商功能（默認 false 默認參數 format）。
+spring.mvc.contentnegotiation.favor-parameter=true
+
+# 自定義請求參數名：指定內容協商時使用的參數名。默認是 format
+spring.mvc.contentnegotiation.parameter-name=type
+
+
