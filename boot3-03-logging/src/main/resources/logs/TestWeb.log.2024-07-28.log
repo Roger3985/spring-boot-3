@@ -1,0 +1,102 @@
+2024-07-28 14:04:57.065 [main] INFO  com.atguigu.logging.Boot303LoggingApplication - Starting Boot303LoggingApplication using Java 21.0.3 with PID 52410 (/Users/sunzhengchang/spring-boot-3/boot3-03-logging/target/classes started by sunzhengchang in /Users/sunzhengchang/spring-boot-3)
+2024-07-28 14:04:57.065 [main] INFO  com.atguigu.logging.Boot303LoggingApplication - No active profile set, falling back to 1 default profile: "default"
+2024-07-28 14:04:57.431 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-07-28 14:04:57.437 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-07-28 14:04:57.438 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-07-28 14:04:57.438 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.26]
+2024-07-28 14:04:57.459 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-07-28 14:04:57.460 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 374 ms
+2024-07-28 14:04:57.619 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-07-28 14:04:57.626 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2024-07-28 14:04:57.630 [main] INFO  com.atguigu.logging.Boot303LoggingApplication - Started Boot303LoggingApplication in 0.71 seconds (process running for 1.068)
+2024-07-28 14:06:20.584 [main] INFO  com.atguigu.logging.Boot303LoggingApplication - Starting Boot303LoggingApplication using Java 21.0.3 with PID 52459 (/Users/sunzhengchang/spring-boot-3/boot3-03-logging/target/classes started by sunzhengchang in /Users/sunzhengchang/spring-boot-3)
+2024-07-28 14:06:20.585 [main] INFO  com.atguigu.logging.Boot303LoggingApplication - No active profile set, falling back to 1 default profile: "default"
+2024-07-28 14:06:20.971 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-07-28 14:06:20.976 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-07-28 14:06:20.977 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-07-28 14:06:20.977 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.26]
+2024-07-28 14:06:20.996 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-07-28 14:06:20.996 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 388 ms
+2024-07-28 14:06:21.139 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-07-28 14:06:21.145 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2024-07-28 14:06:21.149 [main] INFO  com.atguigu.logging.Boot303LoggingApplication - Started Boot303LoggingApplication in 0.817 seconds (process running for 1.079)
+2024-07-28 14:06:32.130 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-28 14:06:32.130 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-07-28 14:06:32.132 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2024-07-28 14:06:32.155 [http-nio-8080-exec-1] INFO  com.atguigu.logging.controller.HelloController - info 日誌...... 參數a:1 b:2
+2024-07-28 14:06:32.156 [http-nio-8080-exec-1] WARN  com.atguigu.logging.controller.HelloController - warn 日誌......
+2024-07-28 14:06:32.156 [http-nio-8080-exec-1] ERROR com.atguigu.logging.controller.HelloController - error 日誌......
+2024-07-28 14:06:40.197 [http-nio-8080-exec-4] INFO  com.atguigu.logging.controller.HelloController - info 日誌...... 參數a:1 b:2
+2024-07-28 14:06:40.197 [http-nio-8080-exec-4] WARN  com.atguigu.logging.controller.HelloController - warn 日誌......
+2024-07-28 14:06:40.197 [http-nio-8080-exec-4] ERROR com.atguigu.logging.controller.HelloController - error 日誌......
+2024-07-28 14:10:15.938 [main] INFO  com.atguigu.logging.Boot303LoggingApplication - Starting Boot303LoggingApplication using Java 21.0.3 with PID 52553 (/Users/sunzhengchang/spring-boot-3/boot3-03-logging/target/classes started by sunzhengchang in /Users/sunzhengchang/spring-boot-3)
+2024-07-28 14:10:15.939 [main] INFO  com.atguigu.logging.Boot303LoggingApplication - No active profile set, falling back to 1 default profile: "default"
+2024-07-28 14:10:16.287 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-07-28 14:10:16.293 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-07-28 14:10:16.294 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-07-28 14:10:16.294 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.26]
+2024-07-28 14:10:16.313 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-07-28 14:10:16.314 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 357 ms
+2024-07-28 14:10:16.452 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-07-28 14:10:16.457 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2024-07-28 14:10:16.461 [main] INFO  com.atguigu.logging.Boot303LoggingApplication - Started Boot303LoggingApplication in 0.74 seconds (process running for 1.294)
+2024-07-28 14:16:24.381 [main] INFO  com.atguigu.logging.Boot303LoggingApplication - Starting Boot303LoggingApplication using Java 21.0.3 with PID 52771 (/Users/sunzhengchang/spring-boot-3/boot3-03-logging/target/classes started by sunzhengchang in /Users/sunzhengchang/spring-boot-3)
+2024-07-28 14:16:24.382 [main] INFO  com.atguigu.logging.Boot303LoggingApplication - No active profile set, falling back to 1 default profile: "default"
+2024-07-28 14:16:24.389 [main] INFO  com.atguigu.logging.Boot303LoggingApplication - Starting Boot303LoggingApplication using Java 21.0.3 with PID 52777 (/Users/sunzhengchang/spring-boot-3/boot3-03-logging/target/classes started by sunzhengchang in /Users/sunzhengchang/spring-boot-3)
+2024-07-28 14:16:24.390 [main] INFO  com.atguigu.logging.Boot303LoggingApplication - No active profile set, falling back to 1 default profile: "default"
+2024-07-28 14:16:24.801 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-07-28 14:16:24.810 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-07-28 14:16:24.811 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-07-28 14:16:24.811 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.26]
+2024-07-28 14:16:24.836 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-07-28 14:16:24.837 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 422 ms
+2024-07-28 14:16:24.838 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-07-28 14:16:24.846 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-07-28 14:16:24.848 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-07-28 14:16:24.848 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.26]
+2024-07-28 14:16:24.907 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-07-28 14:16:24.908 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 498 ms
+2024-07-28 14:16:25.083 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-07-28 14:16:25.093 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2024-07-28 14:16:25.098 [main] INFO  com.atguigu.logging.Boot303LoggingApplication - Started Boot303LoggingApplication in 0.951 seconds (process running for 1.334)
+2024-07-28 14:16:25.121 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-07-28 14:16:25.124 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2024-07-28 14:16:25.130 [main] INFO  o.s.b.a.logging.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-07-28 14:16:25.139 [main] ERROR o.s.b.diagnostics.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2024-07-28 14:16:28.047 [main] INFO  com.atguigu.logging.Boot303LoggingApplication - Starting Boot303LoggingApplication using Java 21.0.3 with PID 52784 (/Users/sunzhengchang/spring-boot-3/boot3-03-logging/target/classes started by sunzhengchang in /Users/sunzhengchang/spring-boot-3)
+2024-07-28 14:16:28.048 [main] INFO  com.atguigu.logging.Boot303LoggingApplication - No active profile set, falling back to 1 default profile: "default"
+2024-07-28 14:16:28.398 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-07-28 14:16:28.403 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-07-28 14:16:28.403 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-07-28 14:16:28.403 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.26]
+2024-07-28 14:16:28.421 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-07-28 14:16:28.422 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 356 ms
+2024-07-28 14:16:28.552 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-07-28 14:16:28.557 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2024-07-28 14:16:28.561 [main] INFO  com.atguigu.logging.Boot303LoggingApplication - Started Boot303LoggingApplication in 0.717 seconds (process running for 0.958)
+2024-07-28 16:14:45.197 [main] INFO  com.atguigu.logging.Boot303LoggingApplication - Starting Boot303LoggingApplication using Java 21.0.3 with PID 55041 (/Users/sunzhengchang/spring-boot-3/boot3-03-logging/target/classes started by sunzhengchang in /Users/sunzhengchang/spring-boot-3)
+2024-07-28 16:14:45.198 [main] INFO  com.atguigu.logging.Boot303LoggingApplication - No active profile set, falling back to 1 default profile: "default"
+2024-07-28 16:14:45.620 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-07-28 16:14:45.627 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-07-28 16:14:45.627 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-07-28 16:14:45.628 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.26]
+2024-07-28 16:14:45.648 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-07-28 16:14:45.648 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 430 ms
+2024-07-28 16:14:45.802 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-07-28 16:14:45.809 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2024-07-28 16:14:45.813 [main] INFO  com.atguigu.logging.Boot303LoggingApplication - Started Boot303LoggingApplication in 0.864 seconds (process running for 1.215)
