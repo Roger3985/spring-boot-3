@@ -1,10 +1,11 @@
-package com.atguigu.boot304web.controller;
+package com.atguigu.web.controller;
 
-import com.atguigu.boot304web.bean.Person;
+import com.atguigu.web.bean.Person;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -43,7 +44,7 @@ public class HelloController {
      * @return person。
      */
     @GetMapping("/person")
-    public Person person() {
+    public Person person(/* @RequestBody Person person */ ) {
         Person person = new Person();
         person.setId(1L);
         person.setUsername("張三");

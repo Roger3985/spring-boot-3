@@ -1,4 +1,4 @@
-package com.atguigu.boot304web.bean;
+package com.atguigu.web.bean;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import lombok.AllArgsConstructor;
