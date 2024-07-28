@@ -1,0 +1,36 @@
+spring.application.name=boot3-03-logging
+# logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{15} ===> %msg%n
+# 2024-07-28 12:36:16.199 INFO  [main] o.s.b.w.e.t.TomcatWebServer ===> Tomcat initialized with port 8080 (http)
+logging.pattern.dateformat=yyyy-MM-dd HH:mm:ss.SSS
+
+# 默認的所有日誌級別沒有精確指定級別就使用 root 的默認級別（但沒有撰寫默認就是 info)
+# logging.level.root=info
+
+# 精確到哪一個包下的所有指定哪個日誌級別的使用
+# 精確調整某個包下的日誌級別
+# logging.level.com.atguigu.logging.controller=debug
+# logging.level.com.atguigu.logging.service=debug
+# logging.level.com.aaa=debug
+# logging.level.com.bbb=debug
+
+# 調整自己所包成的一組組合的 logging 級別
+#logging.group.abc=com.atguigu.logging.controller, com.atguigu.logging.service, com.aaa, com.bbb
+#logging.level.abc=debug
+
+# 調整 sql 中的日誌級別
+#logging.level.sql=debug
+
+# 指定日誌文件的路徑，但 name and path 預設會先使用 name，日誌文件默認名叫 spring.log
+# logging.file.path=/Users/sunzhengchang
+# 指定日誌文件的名， filename 和 path 的配置同時存在只看 filename
+# 1. 只寫名字，就生成到當前項目的同位置的 demo.log
+# logging.file.name=demo.log
+#logging.file.name=haha.log
+# 2. 寫名字 + 路徑，就生成到指定位置的指定文件
+# logging.file.name=/Users/sunzhengchang/demo.log
+
+# 歸檔與切割
+# 預設 = ${LOG_FILE}.%d{yyyy-MM-dd}.%i.gz
+#logging.logback.rollingpolicy.file-name-pattern=${LOG_FILE}.%d{yyyy-MM-dd}.%i.gz
+# 當文件 1MB 就切割為一個單獨文件
+#logging.logback.rollingpolicy.max-file-size=1MB
