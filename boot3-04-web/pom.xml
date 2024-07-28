@@ -45,6 +45,13 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- 利用 webjars 依賴，引入靜態資源 -->
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>ant-design__icons-vue</artifactId>
+			<version>7.0.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
