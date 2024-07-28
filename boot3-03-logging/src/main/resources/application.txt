@@ -1,0 +1,31 @@
+spring.application.name=boot3-04-web
+
+# 一. spring.web:
+# 1. 配置國際化的區域信息
+# 2. 靜態資源策略設置（開啟、處理鏈、緩存）
+
+# 開啟靜態資源映射（默認就是 true）
+#spring.web.resources.add-mappings=true
+
+# 設置緩存
+#spring.web.resources.cache.period=3600
+# 設置緩存的詳細合併項控制，覆蓋 period 配置：瀏覽器第一次請求服務器，
+# 服務器告訴瀏覽器此資源緩存 7200 秒，7200 秒內的所有此資源訪問不用發給服務器請求，7200 秒後才會發起請求給服務器
+#spring.web.resources.cache.cachecontrol.max-age=7200
+# 靜態資源是否為共享緩存（共享緩存）
+#spring.web.resources.cache.cachecontrol.cache-public=true
+# 使用資源 last-modified 時間，來對比服務器和瀏覽器的資源是否相同沒有變化。相同返回 304。默認是 true。
+#spring.web.resources.cache.use-last-modified=true
+
+# 自定義靜態資源文件夾位置
+# spring.web.resources.static-locations=classpath:/a/,classpath:/b/
+
+
+# 二. spring.mvc
+## 2.1 自定義 webjars 路徑的前綴
+#spring.mvc.webjars-path-pattern=/wj/**
+## 2.2 靜態資源訪問路徑前綴（預設 /**）
+# spring.mvc.static-path-pattern=/static/**
+
+# 改變路徑匹配策略：ant_path_matcher 老版策略
+# spring.mvc.pathmatch.matching-strategy=ant_path_matcher
