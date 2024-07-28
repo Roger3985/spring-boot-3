@@ -1,0 +1,68 @@
+# 1. k: v # k v 之前，是空格區分 k:
+# 2. 屬性有層級關係，使用下一行，空兩個空格
+# 3. 左側對齊的代表同一層級的屬性。
+
+### 配置 redis
+---
+spring:
+  application:
+    name: boot3-02-demo
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  datasource:
+    url:
+
+pig:
+  id: 1
+  name: 佩奇
+  age: 5
+
+sheep:
+  id: 1
+  name: 佩奇
+  age: 5
+--- # 下面是一個單獨文檔
+a: b
+person:
+  name: '張三 \n 123'
+  age: 18
+  birth-day: 2010/10/10 12:12:12
+  like: true
+  child:
+    name: "李四 \n 456"
+    age: 20
+    birth-day: 2018/10/10
+    text:
+      - abc
+      - def
+#    text: ["abc" , "def"]
+      - |
+        dogs:
+          - id: 2
+            name: 小黑
+          - id: 3
+            name: 小白
+      - > 
+        aaa
+        bbb
+        ccc
+      - |
+        aaa
+        bbb
+        ccc
+  dogs:
+    - id: 2
+      name: 小黑
+    - id: 3
+      name: 小白
+  cats:
+    c1:
+      id: 2
+      name: 小藍
+    c2: {id: 3, name: 小綠} # 物件也可以用 {} 表示
+
+
+
+
