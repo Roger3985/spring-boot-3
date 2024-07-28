@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>你好：<span th:text="${name}"></span></h1>
+<hr/>
+th:text: 替換標籤體的內容
+th:utext: 替換標籤體的內容，不會轉意 html 標籤，真正顯示為 html 該有的樣式
+<h1 th:text="${name}">哈哈</h1>
+<h1 th:utext="${name}">呵呵</h1>
+<hr/>
+轉大寫
+<h1 th:text="${#strings.toUpperCase(name)}"></h1>
+拼接跟快捷拼接
+<h1 th:text="${'前綴：' +  #strings.toUpperCase(name) + '：後綴'}"></h1>
+<h1 th:text="|前綴哈哈 ${name} 後綴呵呵|"></h1>
+基礎算數比較
+<h1 th:text="${age > 10}"></h1>
+<hr/>
+th:任意 html 屬性;動態替換任意屬性的值
+<img th:src="@{${imageUrl}}" src="a.png" style="width: 300px;"/>
+<br/>
+th:attr:任意屬性指定
+<img src="a.png" style="width: 300px;" th:attr="src=@{${imageUrl}}, style=${style}"/>
+<br/>
+th: 其他指令
+<img th:src="@{${imageUrl}}" th:style="${style}" th:if="${show}"/>
+
+<br/>
+2.png @{} 專門用來取各種路徑
+<img src="/static/2.png" style="width: 300px;" th:src="@{/static/2.png}">
+</body>
+</html>
