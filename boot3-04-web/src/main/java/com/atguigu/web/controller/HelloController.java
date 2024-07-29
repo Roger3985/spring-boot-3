@@ -3,10 +3,14 @@ package com.atguigu.web.controller;
 import com.atguigu.web.bean.Person;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Locale;
 
 /**
  * @author Roger
@@ -36,6 +40,17 @@ public class HelloController {
         String uri = request.getRequestURI();
         log.info(uri);
         return uri;
+    }
+
+    @Autowired // 國際化取消息用的組件
+    MessageSource messageSource;
+
+    @GetMapping("/haha")
+    public String haha(HttpServletRequest request) {
+        Locale locale = request.getLocale();
+        // 利用程式碼的方式獲取國際化配置文件中指定的配置項的值
+        String login = messageSource.getMessage("login", null, locale);
+        return login;
     }
 
     /**
