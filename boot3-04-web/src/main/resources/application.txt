@@ -39,6 +39,9 @@ spring.mvc.contentnegotiation.parameter-name=type
 # 增加一種新的內容類型
 spring.mvc.contentnegotiation.media-types.yaml=text/yaml
 
+# problemdetails 默認是關閉的
+spring.mvc.problemdetails.enabled=true
+
 # 自定義日期格式
 spring.mvc.format.data=yyyy-MM-dd
 spring.mvc.format.time=HH:mm:ss

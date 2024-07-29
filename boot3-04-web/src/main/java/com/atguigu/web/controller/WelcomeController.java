@@ -71,7 +71,7 @@ public class WelcomeController {
                 new Person(8L, "張三6", "zs6@qq.com", 20, "hr")
         );
         model.addAttribute("persons", list);
-        int i = 10/0;
+        // int i = 10/0;
         return "list";
     }
 }
