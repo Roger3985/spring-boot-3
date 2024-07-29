@@ -14,15 +14,30 @@
         <th scope="col">郵箱</th>
         <th scope="col">年齡</th>
         <th scope="col">角色</th>
+        <th scope="col">狀態信息</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="person : ${persons}">
+    <tr th:each="person, status : ${persons}">
         <th scope="row" th:text="${person.id}">1</th>
-        <td th:text="${person.username}">Mark</td>
-        <td th:text="${person.username}">Otto</td>
-        <td th:text="${person.username}">@mdo</td>
-        <td th:text="${person.username}">@mdo</td>
+        <th scope="row" th:text="${person.username}">1</th>
+        <td th:if="${#strings.isEmpty(person.email)}" th:text="'聯繫不上'"></td>
+        <td th:if="${not #strings.isEmpty(person.email)}" th:text="${person.email}"></td>
+        <td th:text="| ${person.age} /${person.age >= 18 ? '成年':'未成年'} |"></td>
+        <td th:switch="${person.role}">
+            <button th:case="'admin'" type="button" class="btn btn-danger">管理員</button>
+            <button th:case="'pm'" type="button" class="btn btn-primary">項目經理</button>
+            <button th:case="'hr'" type="button" class="btn btn-default">人事</button>
+        </td>
+        <td>
+            index: [[${status.index}]] <br/>
+            count: [[${status.count}]] <br/>
+            size(總數量): [[${status.size}]] <br/>
+            current(當前物件): [[${status.current}]] <br/>
+            even(true)/odd(false): [[${status.even}]] <br/>
+            first: [[${status.first}]] <br/>
+            last: [[${status.last}]] <br/>
+        </td>
     </tr>
     </tbody>
 </table>

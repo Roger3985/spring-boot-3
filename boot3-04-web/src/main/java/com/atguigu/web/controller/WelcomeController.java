@@ -47,7 +47,7 @@ public class WelcomeController {
     @GetMapping("/list")
     public String list(Model model) {
         List<Person> list = Arrays.asList(
-                new Person(1L, "張三1", "zs1@qq.com", 15, "pm"),
+                new Person(1L, "張三1", "", 15, "pm"),
                 new Person(2L, "張三2", "zs2@qq.com", 16, "pm"),
                 new Person(3L, "張三3", "zs3@qq.com", 17, "pm"),
                 new Person(4L, "張三4", "zs4@qq.com", 18, "pm"),
