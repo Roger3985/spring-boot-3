@@ -10,3 +10,6 @@ spring.datasource.password=mysecretpassword
 mybatis.mapper-locations=classpath:/mapper/*.xml
 # 打開駝峰命名規則
 mybatis.configuration.map-underscore-to-camel-case=true
+# 開啟調適模式，詳細打印開啟了哪些自動配置
+debug=true
+# Positive（生效的自動配置）Negative（不生效的自動配置）
