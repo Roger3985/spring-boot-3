@@ -39,6 +39,12 @@ spring.mvc.contentnegotiation.parameter-name=type
 # 增加一種新的內容類型
 spring.mvc.contentnegotiation.media-types.yaml=text/yaml
 
+# 自定義日期格式
+spring.mvc.format.data=yyyy-MM-dd
+spring.mvc.format.time=HH:mm:ss
+
+# 配置 jsp 跳轉的
+# spring.mvc.view.prefix=
 # 項目的根路徑手動設置
 # server.servlet.context-path=/demo
 
@@ -54,6 +60,13 @@ spring.thymeleaf.check-template=false
 spring.messages.basename=messages
 # encoding 可以在這邊配置 UTF-8 也可以在 intelliJ setting 中的 encoding 中配置
 spring.messages.encoding=UTF-8
+
+# 當發生錯誤以後，錯誤請求轉發給 /error 進行處理
+# server 開始的都是嵌入式容器(服務器)的配置
+server.error.path=/error
+
+# tomcat 調優，在這裡
+# server.tomcat.accept-count=
 
 
 

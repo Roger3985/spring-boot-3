@@ -1,6 +1,9 @@
 package com.atguigu.web.controller;
 
 import com.atguigu.web.bean.Person;
+import com.atguigu.web.service.AService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,13 +19,16 @@ import java.util.List;
 @Controller // 適合服務端渲染技術，前後不分離模式開始
 public class WelcomeController {
 
+    @Autowired
+    AService aService;
+
     /**
      * 利用模板引擎跳轉到指定視圖頁面。
      * @return welcome 視圖。
      */
     @GetMapping("/welcome")
     public String welcome(@RequestParam("name") String name,
-                          Model model) {
+                          Model model, HttpServletRequest request) {
         // 模板的邏輯視圖地址
         // 物理視圖 = 前綴 + 邏輯視圖名 + 後綴
         // 真實地址 = classpath:/templates/welcome
@@ -33,6 +39,8 @@ public class WelcomeController {
 
 
         model.addAttribute("name", name);
+
+        aService.a();
 
         // 路徑是動態的
         model.addAttribute("imageUrl", "/4.png");
