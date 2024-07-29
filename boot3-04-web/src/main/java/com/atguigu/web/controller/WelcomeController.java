@@ -3,8 +3,7 @@ package com.atguigu.web.controller;
 import com.atguigu.web.bean.Person;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -64,6 +63,7 @@ public class WelcomeController {
                 new Person(8L, "張三6", "zs6@qq.com", 20, "hr")
         );
         model.addAttribute("persons", list);
+        int i = 10/0;
         return "list";
     }
 }
