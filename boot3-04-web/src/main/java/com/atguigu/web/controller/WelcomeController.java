@@ -44,6 +44,15 @@ public class WelcomeController {
         return "welcome";
     }
 
+    /**
+     * 首頁。
+     * @return 視圖。
+     */
+    @GetMapping("/")
+    public String index() {
+        return "index";
+    }
+
     @GetMapping("/list")
     public String list(Model model) {
         List<Person> list = Arrays.asList(
