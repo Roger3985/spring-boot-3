@@ -58,6 +58,7 @@ public class Boot306FeaturesApplication {
 				.main(Boot306FeaturesApplication.class)
 				.sources(Boot306FeaturesApplication.class)
 				.bannerMode(Banner.Mode.CONSOLE)
+				.properties("server.port=8888", "aaa=bbb") // springboot 所有配置項都可以在這裡定義
 //				.environment(null)
 //				.listeners(null)
 				.run(args);
