@@ -42,6 +42,19 @@ spring.mvc.contentnegotiation.media-types.yaml=text/yaml
 # 項目的根路徑手動設置
 # server.servlet.context-path=/demo
 
+# 預設就是 spring.thymeleaf.prefix=classpath:/templates/
+spring.thymeleaf.prefix=classpath:/templates/
+# 預設就是 spring.thymeleaf.suffix=.html
+spring.thymeleaf.suffix=.html
+# 建議開發期間關閉，上線以後開啟(默認為 true)
+spring.thymeleaf.cache=false
+# 默認為 true ，但可以寫為 false 可以讓開發更快速，且方便
+spring.thymeleaf.check-template=false
+# 國際化配置(basename 預設為 messages)
+spring.messages.basename=messages
+# encoding 可以在這邊配置 UTF-8 也可以在 intelliJ setting 中的 encoding 中配置
+spring.messages.encoding=UTF-8
+
 
 
 
