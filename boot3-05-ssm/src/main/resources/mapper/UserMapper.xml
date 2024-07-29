@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace = 對應介面的全限定符 -->
+<mapper namespace="com.atguigu.boot3.ssm.mapper.UserMapper">
+    <!-- 介面的全類名和 namespace 的值是一一對應的 -->
+
+    <select id="getUserById" resultType="com.atguigu.boot3.ssm.bean.TUser">
+        SELECT
+            <!-- id, login_name loginName, nick_name nickName, passwd -->
+            *
+        FROM
+            t_user
+        WHERE
+            id=#{id}
+    </select>
+
+</mapper>
