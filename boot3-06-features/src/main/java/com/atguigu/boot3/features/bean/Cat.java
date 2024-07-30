@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
  * @Description
  * @create 2024-07-25
  */
-//@Profile({"dev"})
-//@Component
+@Profile({"dev"})
+@Component
 public class Cat {
     private Long id;
     private String name;
