@@ -7,7 +7,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Boot307CoreApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Boot307CoreApplication.class, args);
+		SpringApplication application = new SpringApplication(Boot307CoreApplication.class);
+
+		// 參數設置
+		// application.addInitializers();
+
+		application.run(args);
+
+		// SpringApplication.run(Boot307CoreApplication.class, args);
 	}
 
 }
