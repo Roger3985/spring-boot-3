@@ -1,0 +1,21 @@
+## 說明
+1. podman pull [docker.io/confluentinc/cp-zookeeper:latest](http://docker.io/confluentinc/cp-zookeeper:latest)
+2. podman pull [docker.io/bitnami/kafka:3.4.0](http://docker.io/bitnami/kafka:3.4.0)
+3. podman pull [docker.io/provectuslabs/kafka-ui:latest](http://docker.io/provectuslabs/kafka-ui:latest)
+4. podman pull [docker.io/prom/prometheus:latest](http://docker.io/prom/prometheus:latest)
+5. podman pull [docker.io/grafana/grafana](http://docker.io/grafana/grafana)
+
+podman network create my_network
+
+podman run -d --name zookeeper --network my_network -e ZOOKEEPER_CLIENT_PORT=2181 docker.io/confluentinc/cp-zookeeper:latest
+podman run -d --name kafka --network my_network -e KAFKA_BROKER_ID=1 -e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092 -e KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 -e ALLOW_PLAINTEXT_LISTENER=true docker.io/bitnami/kafka:latest
+podman run -d -p 8080:8080 --name kafka-ui --network my_network -e KAFKA_CLUSTERS_0_NAME=local -e KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9092 docker.io/provectuslabs/kafka-ui:latest
+podman run -d --name prometheus --network my_network -p 9090:9090 docker.io/prom/prometheus:latest
+podman run -d --name grafana --network my_network -p 3000:3000 docker.io/grafana/grafana:latest
+
+以下是訪問 kafka-ui 介面在 localhost(本機)
+http://localhost:8080/
+以下是訪問 Grafana 介面在 localhost(本機)
+http://localhost:3000/
+以下是訪問 prometheus 介面在 localhost(本機)
+http://localhost:9090/
