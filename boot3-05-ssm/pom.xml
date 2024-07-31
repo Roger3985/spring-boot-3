@@ -69,6 +69,12 @@
 			<version>3.0.3</version>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>com.atguig</groupId>
+			<artifactId>boot3-08-robot-start</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

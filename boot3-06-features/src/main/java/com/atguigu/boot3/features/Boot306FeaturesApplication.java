@@ -1,5 +1,7 @@
 package com.atguigu.boot3.features;
 
+import com.atguig.boot3.starter.robot.RobotAutoConfiguration;
+import com.atguig.boot3.starter.robot.annotation.EnableRobot;
 import com.atguigu.boot3.features.bean.Cat;
 import com.atguigu.boot3.features.bean.Dog;
 import com.atguigu.boot3.features.bean.Pig;
@@ -10,6 +12,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Import;
 
 /**
  * 1. 標示環境
@@ -32,6 +35,15 @@ import org.springframework.context.ConfigurableApplicationContext;
  *        application-{profile標示}.properties 優先級 application.properties
  *        * 主配置和激活的配置都生效，優先以激活的配置為準。
  */
+
+// SpringBoot 的默認掃描規則，只掃描自己主程序所在的包及其子包
+
+/**
+ * 自定義 starter 所有組件包名: com.atguigu.boot3.starter.robot
+ * 當前項目的主程序所在包:       com.atguigu.boot3.features
+ */
+//@Import(RobotAutoConfiguration.class)
+@EnableRobot
 @Slf4j
 @SpringBootApplication // 主程序類
 public class Boot306FeaturesApplication {

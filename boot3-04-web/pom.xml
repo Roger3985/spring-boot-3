@@ -77,6 +77,12 @@
 			<artifactId>ant-design__icons-vue</artifactId>
 			<version>7.0.1</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.atguig</groupId>
+			<artifactId>boot3-08-robot-start</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>
