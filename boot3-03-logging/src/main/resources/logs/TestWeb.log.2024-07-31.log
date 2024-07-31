@@ -1,0 +1,5 @@
+2024-07-31 21:25:52.628 [main] INFO  com.atguigu.logging.Boot303LoggingApplication - Starting Boot303LoggingApplication using Java 21.0.3 with PID 30561 (/Users/sunzhengchang/spring-boot-3/boot3-03-logging/target/classes started by sunzhengchang in /Users/sunzhengchang/spring-boot-3)
+2024-07-31 21:25:52.628 [main] INFO  com.atguigu.logging.Boot303LoggingApplication - No active profile set, falling back to 1 default profile: "default"
+2024-07-31 21:25:53.102 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-07-31 21:25:53.133 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 481 ms
+2024-07-31 21:25:53.295 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
