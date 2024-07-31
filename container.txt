@@ -1,9 +1,10 @@
 ## 說明
-1. podman pull [docker.io/confluentinc/cp-zookeeper:latest](http://docker.io/confluentinc/cp-zookeeper:latest)
-2. podman pull [docker.io/bitnami/kafka:3.4.0](http://docker.io/bitnami/kafka:3.4.0)
-3. podman pull [docker.io/provectuslabs/kafka-ui:latest](http://docker.io/provectuslabs/kafka-ui:latest)
-4. podman pull [docker.io/prom/prometheus:latest](http://docker.io/prom/prometheus:latest)
-5. podman pull [docker.io/grafana/grafana](http://docker.io/grafana/grafana)
+1. podman pull docker.io/confluentinc/cp-zookeeper:latest
+2. podman pull docker.io/bitnami/kafka:3.4.0
+3. podman pull docker.io/bitnami/kafka:latest
+4. podman pull docker.io/provectuslabs/kafka-ui:latest
+5. podman pull docker.io/prom/prometheus:latest
+6. podman pull docker.io/grafana/grafana
 
 podman network create my_network
 
