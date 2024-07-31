@@ -15,6 +15,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class CouponService {
 
+    public CouponService() {
+        System.out.println("建構器被調用");
+    }
+
     @Async
     @Order(1)
     @EventListener
