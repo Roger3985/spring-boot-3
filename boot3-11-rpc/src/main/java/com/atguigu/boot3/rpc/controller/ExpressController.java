@@ -19,9 +19,9 @@ public class ExpressController {
     ExpressApi expressApi;
 
     @GetMapping("/express")
-    public Mono<String> express(@RequestParam("number") String number) {
+    public String express(@RequestParam("number") String number) {
         // 獲取物流，已經將授權碼統一交由 config 統一進行管理。
         Mono<String> express = expressApi.getExpress(number);
-        return express;
+        return "目前執行成功，但因為尚未獲取授權碼，會 500 是正常的";
     }
 }
