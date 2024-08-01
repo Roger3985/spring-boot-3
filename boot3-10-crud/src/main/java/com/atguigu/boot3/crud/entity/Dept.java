@@ -1,5 +1,6 @@
 package com.atguigu.boot3.crud.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(title = "部門信息")
 public class Dept {
+
+    @Schema(title = "部門 id")
     private Long id;
+
+    @Schema(title = "部門名字")
     private String deptName;
 }
