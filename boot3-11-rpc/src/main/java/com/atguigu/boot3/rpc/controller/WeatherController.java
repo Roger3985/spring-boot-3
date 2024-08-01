@@ -1,5 +1,6 @@
 package com.atguigu.boot3.rpc.controller;
 
+import com.atguigu.boot3.rpc.service.WeatherInterface;
 import com.atguigu.boot3.rpc.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ public class WeatherController {
     public String weather(@RequestParam("city") String city) {
         // 查詢天氣
         Mono<String> weather = weatherService.weather(city);
+
         return "目前執行成功，但因為尚未獲取授權碼，會 500 是正常的";
     }
 }

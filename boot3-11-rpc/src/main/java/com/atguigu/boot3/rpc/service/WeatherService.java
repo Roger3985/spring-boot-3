@@ -1,8 +1,13 @@
 package com.atguigu.boot3.rpc.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.reactive.ClientHttpConnector;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.support.WebClientAdapter;
+import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
@@ -16,9 +21,38 @@ import java.util.Map;
 @Service
 public class WeatherService {
 
+    @Autowired
+    WeatherInterface weatherInterface;
+
     public Mono<String> weather(String city) {
         // 遠程調用中央氣象局 API
 
+        // Mono<String> mono = getByWebClient(city);
+        // 以下放到都放到 config 中
+//        // 1. 創建客戶端
+//        WebClient client = WebClient.builder()
+//                .baseUrl("https://api.example.com")
+//                .codecs(clientCodecConfigurer -> {
+//                    clientCodecConfigurer
+//                            .defaultCodecs()
+//                            .maxInMemorySize(256*1024*1024);
+//                    // 響應資料量太大有可能會超出 BufferSize，所以這裡設置的大一點
+//                })
+//                .build();
+//
+//        // 2. 創建工廠並將 WebClient 放進去
+//        HttpServiceProxyFactory factory = HttpServiceProxyFactory
+//                .builder(WebClientAdapter.forClient(client)).build();
+//
+//        // 3. 獲取代理物件
+//        WeatherInterface weatherInterface = factory.createClient(WeatherInterface.class);
+
+        Mono<String> weather = weatherInterface.getWeather(city);
+
+        return weather;
+    }
+
+    private static Mono<String> getByWebClient(String city) {
         // 1. 創建 WebClient
         WebClient client = WebClient.create();
 
@@ -47,7 +81,6 @@ public class WeatherService {
         mono.subscribe(value -> {
             System.out.println(value);
         });
-
         return mono;
     }
 }
