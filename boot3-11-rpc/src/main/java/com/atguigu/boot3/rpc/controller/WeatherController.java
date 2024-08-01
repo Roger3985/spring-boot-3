@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
 /**
  * @author 2407009
@@ -20,7 +21,7 @@ public class WeatherController {
     @GetMapping("/weather")
     public String weather(@RequestParam("city") String city) {
         // 查詢天氣
-        weatherService.weather(city);
-        return
+        Mono<String> weather = weatherService.weather(city);
+        return "目前執行成功，但因為尚未獲取授權碼，會 500 是正常的";
     }
 }
