@@ -23,7 +23,7 @@ public class AppSecurityConfiguration {
 
         // 表單登入功能
         // 3. 表單登入功能: 開啟默認的表單登入功能: Spring Security 提供默認的登入頁(沒有這一項寫入，僅僅寫了上面授權功能，會將預設的表單登入禁用)
-        http.formLogin();
+        http.formLogin(); // 目前此項已經被淘汰，但還能夠使用
 
         return http.build();
     }
