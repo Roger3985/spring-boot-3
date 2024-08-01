@@ -19,6 +19,11 @@ import org.springframework.kafka.annotation.EnableKafka;
  *    1) 消費者來接受消息，需要有 group-id
  *    2) 收消息使用 @KafkaListener + ConsumerRecord
  *    3) spring kafka 的所有配置
+ * 6. 核心概念
+ * 	  分區: 分散儲存，1T 的資料分散到 N 個節點(node)
+ * 	  副本: 備份機制，每個小分區的資料都有備份
+ * 	  主題: topics; 消息是發送給某個主題的
+ * 詳細 (請詳閱官網): https://kafka.apache.org/
  */
 @EnableKafka
 @SpringBootApplication
