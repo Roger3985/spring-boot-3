@@ -1,0 +1,254 @@
+要使用 Podman 建立 Docker 映像（image），你可以依照以下步驟進行：
+
+重要:
+1. podman build -t my-spring-boot-app .
+2. podman run -d --name my-spring-boot-container --network my_network -p 9999:9999 my-spring-boot-image
+
+
+1. 準備 Dockerfile
+首先，你需要一個 Dockerfile 來定義你的映像。假設你已經有了 Dockerfile，以下是一個簡單的例子：
+
+dockerfile
+複製程式碼
+# 使用官方的 Java 21 基礎映像
+FROM amazoncorretto:21
+
+# 設置工作目錄
+WORKDIR /app
+
+# 複製 JAR 文件到容器中
+COPY target/boot3-14-actuator-0.0.1-SNAPSHOT.jar app.jar
+
+# 設置容器啟動時執行的命令
+ENTRYPOINT ["java", "-jar", "app.jar"]
+
+# 開放應用程序運行的端口
+EXPOSE 9999
+這個 Dockerfile 用於將 Spring Boot 應用程序打包成一個 Docker 映像。
+
+2. 使用 Podman 建立映像
+確保你已經安裝了 Podman。如果尚未安裝，請根據你的操作系統安裝 Podman。
+
+接下來，在包含 Dockerfile 的目錄中，執行以下命令來建立映像：
+
+bash
+複製程式碼
+podman build -t my-spring-boot-app .
+這條命令的參數說明：
+
+-t my-spring-boot-app：為映像指定標籤（tag），這裡我們稱它為 my-spring-boot-app。
+.：指定 Dockerfile 所在的目錄（當前目錄）。
+3. 查看映像
+建立映像後，你可以使用以下命令查看已建立的映像：
+
+bash
+複製程式碼
+podman images
+這條命令會列出所有已建立的映像，包括剛才建立的 my-spring-boot-app。
+
+4. 運行容器
+使用建立的映像來運行容器：
+
+bash
+複製程式碼
+podman run -d -p 9999:9999 --name my-spring-boot-container my-spring-boot-app
+這條命令的參數說明：
+
+-d：在後台運行容器（detached mode）。
+-p 9999:9999：將容器的 9999 端口映射到宿主機的 9999 端口。
+--name my-spring-boot-container：為容器指定名稱（可選）。
+my-spring-boot-app：使用的映像名稱。
+5. 檢查容器狀態
+你可以使用以下命令來檢查容器的狀態：
+
+bash
+複製程式碼
+podman ps
+這條命令會列出所有運行中的容器。
+
+6. 查看容器日誌
+若需要查看容器的日誌，可以使用以下命令：
+
+bash
+複製程式碼
+podman logs my-spring-boot-container
+7. 停止和刪除容器
+要停止和刪除容器，使用以下命令：
+
+bash
+複製程式碼
+podman stop my-spring-boot-container
+podman rm my-spring-boot-container
+8. 刪除映像
+如果需要刪除映像，使用以下命令：
+
+bash
+複製程式碼
+podman rmi my-spring-boot-app
+這些步驟應該可以幫助你使用 Podman 建立和管理 Docker 映像。如果有其他問題或需要進一步的幫助，隨時告訴我！
+
+run 這個 images
+ChatGPT
+要運行你剛建立的 Podman 映像，可以按照以下步驟操作：
+
+1. 運行容器
+使用 podman run 命令來運行容器。以下是一個範例命令：
+
+bash
+複製程式碼
+podman run -d -p 9999:9999 --name my-spring-boot-container my-spring-boot-app
+這條命令的參數說明：
+
+-d：在後台運行容器（detached mode）。
+-p 9999:9999：將容器內的 9999 端口映射到宿主機的 9999 端口。這樣，你可以從宿主機訪問容器內的應用程序。
+--name my-spring-boot-container：為容器指定名稱（可選），這樣你可以更容易地參考這個容器。
+my-spring-boot-app：指定要運行的映像名稱。
+2. 檢查容器狀態
+確認容器是否已成功啟動，可以使用以下命令：
+
+bash
+複製程式碼
+podman ps
+這條命令會列出所有運行中的容器。你應該能夠看到 my-spring-boot-container 列在其中。
+
+3. 查看容器日誌
+查看容器的日誌以確認應用程序是否正常啟動：
+
+bash
+複製程式碼
+podman logs my-spring-boot-container
+這條命令會顯示容器的標準輸出和錯誤日誌。
+
+4. 訪問應用程序
+如果你的應用程序在 9999 端口上運行，你可以在瀏覽器或使用 curl 命令訪問它：
+
+bash
+複製程式碼
+curl http://localhost:9999/actuator/prometheus
+5. 停止和刪除容器
+如果需要停止並刪除容器，請使用以下命令：
+
+bash
+複製程式碼
+podman stop my-spring-boot-container
+podman rm my-spring-boot-container
+這樣就可以停止並刪除指定的容器。
+
+6. 刪除映像
+如果需要刪除映像，使用以下命令：
+
+bash
+複製程式碼
+podman rmi my-spring-boot-app
+這些步驟應該能幫助你運行和管理 Podman 容器。如果遇到任何問題，請隨時告訴我！
+
+連接到 container
+ChatGPT
+要連接到正在運行的 Podman 容器，可以使用以下幾種方法：
+
+1. 進入容器的命令行
+你可以使用 podman exec 命令進入容器的命令行。這樣可以在容器內部執行命令，類似於使用 SSH 連接到遠程主機。
+
+例如，進入容器並啟動 bash（如果容器內部有安裝 bash）：
+
+bash
+複製程式碼
+podman exec -it my-spring-boot-container /bin/bash
+或者，如果容器內部只安裝了 sh：
+
+bash
+複製程式碼
+podman exec -it my-spring-boot-container /bin/sh
+這條命令中的參數說明：
+
+-it：交互式終端模式（interactive terminal）。
+my-spring-boot-container：容器名稱。
+/bin/bash 或 /bin/sh：容器內部要執行的命令（這裡是啟動 bash 或 sh）。
+2. 檢查容器的端口
+確保容器內的應用程序正在運行並且端口正確映射到宿主機。可以使用以下命令查看容器的端口映射：
+
+bash
+複製程式碼
+podman port my-spring-boot-container
+3. 連接到容器內的應用程序
+如果你的應用程序在容器內部運行在某個端口上（例如 9999），你可以從宿主機使用 curl 或瀏覽器來訪問這些端口。確認端口映射正確後，可以訪問應用程序：
+
+bash
+複製程式碼
+curl http://localhost:9999/actuator/prometheus
+4. 查看容器的日誌
+如果容器內部的應用程序有問題，可以查看容器的日誌：
+
+bash
+複製程式碼
+podman logs my-spring-boot-container
+5. 檢查容器內的進程
+如果你進入容器後想要檢查正在運行的進程，可以使用 ps 命令：
+
+bash
+複製程式碼
+ps aux
+6. 退出容器
+如果你完成了在容器內部的操作，可以使用 exit 命令退出容器的命令行：
+
+bash
+複製程式碼
+exit
+這些步驟應該能幫助你連接和管理 Podman 容器。如果有其他問題，隨時告訴我！
+
+要讓 Podman 容器連接到指定的網絡（例如 my_network），你需要先創建網絡，然後在啟動容器時將它連接到這個網絡。以下是具體的步驟：
+
+1. 創建自定義網絡
+首先，創建一個名為 my_network 的自定義網絡：
+
+bash
+複製程式碼
+podman network create my_network
+2. 啟動容器並連接到網絡
+啟動容器時，將其連接到剛剛創建的 my_network 網絡。以下是一個範例命令：
+
+bash
+複製程式碼
+podman run -d --name my-spring-boot-container --network my_network -p 9999:9999 my-spring-boot-image
+這條命令的說明：
+
+-d：在後台運行容器（detach mode）。
+--name my-spring-boot-container：指定容器名稱。
+--network my_network：將容器連接到 my_network 網絡。
+-p 9999:9999：將容器的 9999 端口映射到宿主機的 9999 端口。
+my-spring-boot-image：你的容器鏡像名稱。
+3. 確認容器是否連接到網絡
+可以使用以下命令檢查容器是否連接到指定的網絡：
+
+bash
+複製程式碼
+podman network inspect my_network
+這條命令會顯示網絡的詳細信息，包括連接到該網絡的容器列表。
+
+4. 檢查容器的網絡配置
+如果你需要檢查容器的網絡配置，可以進入容器並使用 ip a 命令來查看容器內部的網絡設置：
+
+bash
+複製程式碼
+podman exec -it my-spring-boot-container /bin/sh
+ip a
+這將顯示容器內部的 IP 地址和網絡接口信息。
+
+5. 連接到容器內的應用程序
+一旦容器連接到 my_network，你可以使用宿主機上的 curl 命令來測試容器的端口是否正常工作：
+
+bash
+複製程式碼
+curl http://localhost:9999/actuator/prometheus
+6. 在容器內部進行測試
+如果你希望從另一個容器中測試連接，可以在同一網絡中的另一個容器內部執行以下命令：
+
+bash
+複製程式碼
+podman run -it --network my_network --rm alpine /bin/sh
+在這個臨時容器內部，你可以使用 curl 或 wget 命令來測試連接到 my-spring-boot-container 容器的端口：
+
+sh
+複製程式碼
+curl http://my-spring-boot-container:9999/actuator/prometheus
+這些步驟應該能幫助你設置和連接到 my_network 網絡。如果有其他問題或需要進一步幫助，隨時告訴我！
