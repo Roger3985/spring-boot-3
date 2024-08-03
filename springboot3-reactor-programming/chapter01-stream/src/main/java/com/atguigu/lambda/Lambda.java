@@ -1,9 +1,7 @@
 package com.atguigu.lambda;
 
 import java.util.*;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
+import java.util.function.*;
 
 /**
  * @author Roger
@@ -54,6 +52,12 @@ public class Lambda {
         Supplier<String> supplier = () -> UUID.randomUUID().toString();
         String s = supplier.get();
         System.out.println(s);
+
+        BiFunction<String, Integer, Long> biFunction = (a, b) -> 888L;
+
+        Predicate<Integer> even = (t) -> t % 2 == 0;
+        System.out.println(even.test(6)); // 正向判斷
+        System.out.println(even.negate().test(2)); // 反向判斷
     }
 
     public static void bbb(String[] args) {
