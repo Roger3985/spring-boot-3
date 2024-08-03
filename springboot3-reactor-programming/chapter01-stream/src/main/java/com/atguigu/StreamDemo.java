@@ -16,6 +16,38 @@ import java.util.stream.Stream;
  */
 public class StreamDemo {
 
+    private static String[] buffer = new String[1];
+
+    public static void main(String[] args) {
+        StreamDemo demo = new StreamDemo();
+        System.out.println("111");
+        demo.a();
+        // b 要消費資料
+        // 以下方法使用異步（非同步）處理
+        new Thread(() -> {
+            demo.b("aa"); // b 也可以進行失敗重試
+        }).start();
+        System.out.println("222");
+    }
+
+    public void a() {
+        String a = "aaa";
+        System.out.println("a 做完事...");
+        buffer[0] = a; // 模擬消息佇列
+
+        // 引入一個緩衝區，引入消息佇列，就能實現全系統，全異步，不阻塞，不等待，實時響應
+    }
+
+    public void b(String arg) {
+        arg = buffer[0];
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("哈哈：" + arg);
+    }
+
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
@@ -25,7 +57,7 @@ public class StreamDemo {
         private Integer age;
     }
 
-    public static void main(String[] args) {
+    public static void a(String[] args) {
         List<Person> list = List.of(
                 new Person("雷 豐陽", "男", 18),
                 new Person("王 五", "男", 20),
@@ -43,8 +75,18 @@ public class StreamDemo {
 
         // 迭代器模式
         for (Person person : list) {
+            // 1. 迭代速度取決於資料量
+            // 2. 資料來得有容器緩衝
             System.out.println(person);
         }
+
+        // 背壓：背向壓力：消費者根據自己的能力逐個處理
+        // 正壓：正向壓力：資料的生產者給消費者壓力;
+//        list.stream()
+//                .filter(a -> {
+//                    System.out.println("aaa");
+//                    return a >
+//                })
 
     }
 
