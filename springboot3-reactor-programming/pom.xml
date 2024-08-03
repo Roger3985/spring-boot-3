@@ -5,10 +5,14 @@
   <groupId>com.atguigu</groupId>
   <artifactId>springboot3-reactor-programming</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
 
   <name>springboot3-reactor-programming</name>
   <url>http://maven.apache.org</url>
+  <modules>
+    <module>chapter01-stream</module>
+    <module>chapter02-reactor</module>
+  </modules>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
