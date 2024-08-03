@@ -65,12 +65,18 @@ public class StreamDemo {
                 new Person("王 七", "男", 33),
                 new Person("雷 二", "男", 18));
 
-        Map<String, List<Person>> collect = list.stream()
+        /*
+            資料是自動流的，而不是靠迭代被動流動;
+            -> 推拉模型 :
+               推： 流模式，上游有資料，自動推給下游。
+               拉：迭代器：自己遍歷，自己拉取。
+         */
+        Map<String, List<Person>> collect =
+                list.stream()
                 .filter(s -> s.age > 15)
                 .collect(Collectors.groupingBy(t -> t.gender));
 
         // Flow
-
         System.out.println(collect);
 
         // 迭代器模式
