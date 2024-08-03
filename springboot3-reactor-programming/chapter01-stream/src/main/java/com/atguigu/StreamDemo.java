@@ -1,10 +1,7 @@
 package com.atguigu;
 
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Stream;
 
 /**
@@ -51,6 +48,8 @@ public class StreamDemo {
                 () -> System.out.println("列表中沒有偶數")
         );
 
+        // :: 冒號引用（全類名::方法）
+
         // 流的三大部分：1. 資料流 2. N個中間操作 3. 一個中止操作
         /*
             1. 資料流：
@@ -69,5 +68,27 @@ public class StreamDemo {
         Map<Object, Object> of = Map.of();
         of.keySet().stream();
         of.values().stream();
+
+        System.out.println("主執行緒：" + Thread.currentThread());
+
+        // 流是並發還是不並發？和 for 有啥區別？ // 流也是用 for 循環挨個處理 默認不併發，但也可以是併發的
+        // 併發之後需要解決多執行續安全問題
+        List aaa = new ArrayList();
+
+        // 有狀態資料將產生併發安全問題。千萬不要這麼寫？
+        // 流的所有操作都是無狀態的; 資料狀態僅在此函數內有效，不溢出至函數外
+        long count = Stream.of(1, 2, 3, 4, 5)
+                .parallel() // intermediate operation. 併發流出現問題請使用鎖來解決此問題(synchronized)
+                .filter(i -> {
+                    synchronized (Object.class) {
+                        System.out.println("Filter 執行緒：" + Thread.currentThread());
+                        System.out.println("正在 Filter：" + i);
+                        // aaa.add(i);
+                        return i > 2;
+                    }
+                }) // intermediate operation.
+                .count(); // terminal operation .
+
+        System.out.println(count);
     }
 }
