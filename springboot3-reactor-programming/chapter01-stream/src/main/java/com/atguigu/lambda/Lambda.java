@@ -1,5 +1,10 @@
 package com.atguigu.lambda;
 
+import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 /**
  * @author Roger
  * @Description
@@ -33,7 +38,69 @@ class MyInterfaceImpl implements MyInterface {
 }
 
 public class Lambda {
+
     public static void main(String[] args) {
+        // 聲明一個函數
+        BiConsumer<String, String> consumer = (a, b) -> {
+            System.out.println("哈哈：" + a + "; 呵呵：" + b);
+        };
+        consumer.accept("1", "2");
+
+        // 聲明一個函數
+        Function<String, Integer> function = (String x) -> Integer.parseInt(x);
+        System.out.println(function.apply("2"));
+
+        // 聲明一個函數
+        Supplier<String> supplier = () -> UUID.randomUUID().toString();
+        String s = supplier.get();
+        System.out.println(s);
+    }
+
+    public static void bbb(String[] args) {
+        List<String> names = new ArrayList<String>();
+        names.add("Alice");
+        names.add("Bob");
+        names.add("Charlie");
+        names.add("David");
+
+        // 比較器原生寫法
+//        Collections.sort(names, new Comparator<String>() {
+//            @Override
+//            public int compare(String o1, String o2) {
+//                return o2.compareTo(o1);
+//            }
+//        });
+
+        // 比較器（簡化寫法）：直接寫函數式介面就方便
+        // Collections.sort(names, (o1, o2) -> o2.compareTo(o1));
+        // 類::方法; 引用類中的實例方法; 忽略 Lambda 的完整寫法
+        Collections.sort(names, String::compareTo);
+        System.out.println(names);
+
+        new Thread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        System.out.println("哈哈哈");
+                    }
+                }
+        ).start();
+
+        Runnable runnable = () -> System.out.println("aaa");
+
+        new Thread(() -> System.out.println("哈哈哈")).start();
+
+        /*
+            最佳實戰：
+            1. 以後調用某個方法傳入參數，這個參數是一個介面物件，且定義了一個方法，就直接調用 Lambda 簡化寫法即可。
+         */
+    }
+
+    /**
+     * Lambda 簡化函數介面實力創建
+     * @param args
+     */
+    public static void aaa(String[] args) {
         // 1. 自己創建實現類物件
         MyInterface myInterface = new MyInterfaceImpl();
         System.out.println(myInterface.sum(1, 2));
