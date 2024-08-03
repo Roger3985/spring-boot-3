@@ -1,7 +1,12 @@
 package com.atguigu;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -10,7 +15,100 @@ import java.util.stream.Stream;
  * @create 2024-08-03
  */
 public class StreamDemo {
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    static class Person {
+        private String name;
+        private String gender;
+        private Integer age;
+    }
+
     public static void main(String[] args) {
+        List<Person> list = List.of(
+                new Person("雷 豐陽", "男", 18),
+                new Person("王 五", "男", 20),
+                new Person("趙 六", "男", 22),
+                new Person("王 七", "男", 33),
+                new Person("雷 二", "男", 18));
+
+        Map<String, List<Person>> collect = list.stream()
+                .filter(s -> s.age > 15)
+                .collect(Collectors.groupingBy(t -> t.gender));
+
+        // Flow
+
+        System.out.println(collect);
+
+        // 迭代器模式
+        for (Person person : list) {
+            System.out.println(person);
+        }
+
+    }
+
+    public static void aa(String[] args) {
+        List<Person> list = List.of(
+                new Person("雷 豐陽", "男", 18),
+                new Person("王 五", "男", 20),
+                new Person("趙 六", "男", 22),
+                new Person("王 七", "男", 33),
+                new Person("雷 二", "男", 18));
+
+        // 1. 挑出年齡大於 18 的人 // 拿到集合流其實就是拿到集合的深拷貝的值，流的所有操作都是流的元素引用
+        // filter、map、flatMap 流裡面的每一個元素都完整走一個流水線，才能輪到下一個元素;
+        // 第一個元素流經所有的管道處理後，下一個元素才能繼續執行完整管道流程
+        // 聲明式：基於事件機制的回調
+        list.stream()
+                .filter(person -> { // 程序員不自己調用，發生這件事情的時候系統調用
+                    // System.out.println("filter: " + person.hashCode());
+                    return person.age > 18;
+                }) // 挑出大於 18; person 流
+                .peek(person -> System.out.println("filter peek: " + person))
+                .map(person -> {
+                    // System.out.println("Person: " + person.hashCode());
+                    return person.getName();
+                }) // 拿到所有人的姓名
+                .peek(element -> System.out.println("map peek: " + element))
+                .flatMap(element -> {
+                    String[] s = element.split(" ");
+                    return Arrays.stream(s);
+                })
+                .distinct() // 去重複
+                .limit(3) // 設上限制
+                .sorted(String::compareTo) // 排序 String 排序器
+                // .forEach(System.out::println);
+                .forEach(e -> {
+                    System.out.println("元素: " + e);
+//                    try {
+//                        Thread.sleep(2000);
+//                    } catch (InterruptedException ex) {
+//                        throw new RuntimeException(ex);
+//                    }
+                });
+
+        // distinct sorted peek limit skip takeWhile
+
+        System.out.println("=============================");
+
+
+        List<Integer> collect = List.of(1, 2, 3, 4, 5, 6)
+                .stream()
+                .filter(i -> i > 2) // 無條件遍歷流中的每一個元素
+                .collect(Collectors.toList());
+        System.out.println(collect);
+
+        List<Integer> collect1 = List.of(1, 2, 3, 4, 5, 6)
+                .stream()
+                .takeWhile(i -> i > 2) // 當滿足條件，拿到這個元素，不滿足直接結束流操作
+                .collect(Collectors.toList());
+        System.out.println(collect1);
+
+        // filter、map、flatMap、takeWhile...
+    }
+
+    public static void aaa(String[] args) {
         // 1. 挑出最大偶數
         List<Integer> list = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
@@ -73,7 +171,9 @@ public class StreamDemo {
 
         // 流是並發還是不並發？和 for 有啥區別？ // 流也是用 for 循環挨個處理 默認不併發，但也可以是併發的
         // 併發之後需要解決多執行續安全問題
-        List aaa = new ArrayList();
+        // List aaa = new ArrayList();
+
+        Collection<Object> objects = Collections.synchronizedCollection(new ArrayList<>());
 
         // 有狀態資料將產生併發安全問題。千萬不要這麼寫？
         // 流的所有操作都是無狀態的; 資料狀態僅在此函數內有效，不溢出至函數外
@@ -81,6 +181,7 @@ public class StreamDemo {
                 .parallel() // intermediate operation. 併發流出現問題請使用鎖來解決此問題(synchronized)
                 .filter(i -> {
                     synchronized (Object.class) {
+                        // objects.add(i);
                         System.out.println("Filter 執行緒：" + Thread.currentThread());
                         System.out.println("正在 Filter：" + i);
                         // aaa.add(i);
