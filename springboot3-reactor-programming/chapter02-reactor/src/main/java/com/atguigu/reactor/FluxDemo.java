@@ -2,14 +2,12 @@ package com.atguigu.reactor;
 
 import org.reactivestreams.Subscription;
 import reactor.core.Disposable;
-import reactor.core.publisher.BaseSubscriber;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-import reactor.core.publisher.SignalType;
+import reactor.core.publisher.*;
 
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Roger
@@ -18,10 +16,35 @@ import java.util.List;
  */
 public class FluxDemo {
 
-    public static void main(String[] args) throws IOException {
-        new FluxDemo().dispose();
+    public static void main(String[] args) throws IOException, InterruptedException {
+        new FluxDemo().create();
         // request(N) : 找發佈者請求 N 次資料：總共能得到： N * bufferSize 個資料
         System.in.read();
+    }
+
+    public void create() throws InterruptedException {
+
+        // 異步環境下
+        Flux.create(fluxSink -> {
+            MyListener myListener = new MyListener(fluxSink);
+            for (int i = 0; i < 100; i++) {
+                myListener.online("張" + i);
+            }
+        })
+                .log()
+                .subscribe();
+    }
+
+    class MyListener {
+        FluxSink<Object> sink;
+        public MyListener (FluxSink<Object> sink) {
+            this.sink = sink;
+        }
+        // 用戶登入，觸發 online 監聽
+        public void online(String userName) {
+            System.out.println("用戶登入了：" + userName);
+            sink.next(userName); // 傳入用戶
+        }
     }
 
     public void dispose() {
