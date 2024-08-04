@@ -18,8 +18,39 @@ import java.util.List;
 public class FluxDemo {
 
     public static void main(String[] args) {
-        new FluxDemo().limit();
+        new FluxDemo().generate();
         // request(N) : 找發佈者請求 N 次資料：總共能得到： N * bufferSize 個資料
+    }
+
+    // 編程方式創建序列
+    // Sink: 接收器、水槽、通道;
+    // Source: 資料源 Sink: 接受端
+    public void generate() {
+        Flux<Object> flux = Flux.generate(() -> 0, // 初始 state 值
+                (state, sink) -> {
+                    if (state <= 10) {
+                        // 0- 10
+                        sink.next(state);
+                    } else {
+                        sink.complete(); // 完成, 完成信號
+                    }
+
+                    if (state == 7) {
+                        sink.error(new RuntimeException("我不喜歡 7 "));
+                    }
+                    return state + 1; // 返回新的迭代值 state 值
+                });
+//        Flux<Object> flux = Flux.generate(sink -> {
+//            for (int i = 0; i < 100; i++) {
+//                sink.next("哈哈-" + i); // 傳遞資料，可能會拋出[不受檢異常（運行時異常）、受檢異常（編譯時異常）]
+//            }
+//        });
+        flux
+                .log()
+                .doOnError(throwable -> {
+                    System.out.println("throwable = " + throwable);
+                })
+                .subscribe();
     }
 
     // 限流
