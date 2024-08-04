@@ -1,6 +1,7 @@
 package com.atguigu.reactor;
 
 import org.reactivestreams.Subscription;
+import reactor.core.Disposable;
 import reactor.core.publisher.BaseSubscriber;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -17,9 +18,30 @@ import java.util.List;
  */
 public class FluxDemo {
 
-    public static void main(String[] args) {
-        new FluxDemo().generate();
+    public static void main(String[] args) throws IOException {
+        new FluxDemo().dispose();
         // request(N) : 找發佈者請求 N 次資料：總共能得到： N * bufferSize 個資料
+        System.in.read();
+    }
+
+    public void dispose() {
+        Flux<Integer> flux = Flux.range(1, 10000)
+                .delayElements(Duration.ofSeconds(1))
+                .map(i -> i + 7)
+                .log();
+
+
+        // 1. 消費者是實現了 Disposable 可取消
+        Disposable disposable = flux.subscribe(System.out::println);
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(10000);
+                disposable.dispose(); // 銷毀
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
     }
 
     // 編程方式創建序列
@@ -82,6 +104,8 @@ public class FluxDemo {
 
         // 尚未使用 buffer 前，一次發一個，一個一個發;
 
+        // 所有操作符作用於發佈者流。
+
         // 消費者每次 request(1) 拿到的是幾個真正的資料：buffer 的資料
 //        buffer.subscribe(v -> {
 //            System.out.println("類型: " + v.getClass() + " 值: " + v);
@@ -101,7 +125,7 @@ public class FluxDemo {
             protected void hookOnNext(List<Integer> value) {
                 System.out.println("元素：" + value);
             }
-        });
+        }); // 自定義訂閱者感知
 
 
     }
