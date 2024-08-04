@@ -8,6 +8,7 @@ import reactor.core.publisher.SignalType;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.List;
 
 /**
  * @author Roger
@@ -16,13 +17,48 @@ import java.time.Duration;
  */
 public class FluxDemo {
 
+    public static void main(String[] args) {
+        new FluxDemo().buffer();
+        // request(N) : 找發佈者請求 N 次資料：總共能得到： N * bufferSize 個資料
+    }
+
+    public void buffer() {
+        Flux<List<Integer>> buffer = Flux.range(1, 10) // 原始流 10 個
+                .buffer(2);// 添加了緩衝區：緩衝了 2(n) 個元素，消費者一次最多可以拿到三個元素; 湊滿數量之後批量給消費者
+
+        // 尚未使用 buffer 前，一次發一個，一個一個發;
+
+        // 消費者每次 request(1) 拿到的是幾個真正的資料：buffer 的資料
+//        buffer.subscribe(v -> {
+//            System.out.println("類型: " + v.getClass() + " 值: " + v);
+//            for (Integer integer : v) {
+//                System.out.println("查詢訂單：" + integer);
+//            }
+//        });
+
+        buffer.subscribe(new BaseSubscriber<List<Integer>>() {
+            @Override
+            protected void hookOnSubscribe(Subscription subscription) {
+                System.out.println("綁定關係...");
+                request(1);
+            }
+
+            @Override
+            protected void hookOnNext(List<Integer> value) {
+                System.out.println("元素：" + value);
+            }
+        });
+
+
+    }
+
     /**
      * subscrible: 訂閱流: 沒訂閱之前什麼也不做
      * -> subscrible 開始，流的元素開始流動，發生資料變化
      * -> 響應式編程：資料流(Flux/Mono) + 變化傳播（流的操作）
      * @param args
      */
-    public static void main(String[] args) {
+    public void customSubscrible(String[] args) {
 
         // onErrorXxx, doOnXxx 不一樣
         // doOnXxx：發生這個事件的時候產生一個回調，通知你（僅此而已，不能改變元素、信號）
@@ -63,13 +99,16 @@ public class FluxDemo {
                 System.out.println("綁定了..." + subscription);
 
                 // 找發佈者要資料
-                request(1); // 要一個資料
-//                requestUnbounded(); // 沒有邊界的（要無限資料）
+                request(1); // 要一個資料; 給上游傳入資料傳送一個訊號
+//                requestUnbounded(); // 沒有邊界的（要無限資料）; 上游給我所有的訊號
             }
 
-            @Override
+            @Override // 每個元素觸發 onNext 方法
             protected void hookOnNext(String value) {
                 System.out.println("資料到達，正在處理： " + value);
+                if (value.equals("哈哈: 5")) {
+                    cancel(); // 取消流
+                }
                 request(1); // 要一個資料
 
             }
