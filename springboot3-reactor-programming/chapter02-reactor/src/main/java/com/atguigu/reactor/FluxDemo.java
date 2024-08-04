@@ -16,7 +16,88 @@ import java.time.Duration;
  */
 public class FluxDemo {
 
+    /**
+     * subscrible: 訂閱流: 沒訂閱之前什麼也不做
+     * -> subscrible 開始，流的元素開始流動，發生資料變化
+     * -> 響應式編程：資料流(Flux/Mono) + 變化傳播（流的操作）
+     * @param args
+     */
     public static void main(String[] args) {
+
+        // onErrorXxx, doOnXxx 不一樣
+        // doOnXxx：發生這個事件的時候產生一個回調，通知你（僅此而已，不能改變元素、信號）
+        // onXxx：發生這個事件執行一個動作。這個動作可以改變元素、信號。
+        // like AOP: 普通通知（前置、後置、異常、返回） v.s. 環繞通知（ProceedingJoinPoint)
+
+        // y = kx + b
+        Flux<String> flux = Flux.range(1, 10)
+                .map(i ->  {
+                    System.out.println("map..." + i);
+                    if (i == 9) {
+                        i = 10 / (9 - i); // 數學運算異常; doOnXxx
+                    }
+                    return "哈哈: " + i;
+                })
+                .onErrorComplete(); // 流錯誤的時候，把錯誤吃掉，轉為正常信號
+
+//        flux.subscribe(); // 流被訂閱; 默認訂閱;
+//        flux.subscribe(v -> System.out.println("v = " + v)); // 指定訂閱規則，只傳入正常消費者; 只消費正常元素
+//        flux.subscribe(
+//                v -> System.out.println("v = " + v), // 流元素消費
+//                throwable -> System.out.println("throwable = " + throwable), // 感知異常結束
+//                () -> System.out.println("流結束了...") // 感知正常結束
+//        );
+
+        // 流的生命週期鉤子可以傳播給訂閱者。
+        /*
+            a() {
+                data = b();
+            }
+         */
+        flux.subscribe(new BaseSubscriber<String>() {
+
+            // 生命週期鉤子1: 訂閱關係綁定的時候觸發
+            @Override
+            protected void hookOnSubscribe(Subscription subscription) {
+                // 流被訂閱的時候觸發
+                System.out.println("綁定了..." + subscription);
+
+                // 找發佈者要資料
+                request(1); // 要一個資料
+//                requestUnbounded(); // 沒有邊界的（要無限資料）
+            }
+
+            @Override
+            protected void hookOnNext(String value) {
+                System.out.println("資料到達，正在處理： " + value);
+                request(1); // 要一個資料
+
+            }
+
+            // hookOnComplete、hookOnError 二選一執行
+            @Override
+            protected void hookOnComplete() {
+                System.out.println("流正常結束了...");
+            }
+
+            @Override
+            protected void hookOnError(Throwable throwable) {
+                System.out.println("流異常了..." + throwable);
+            }
+
+            @Override
+            protected void hookOnCancel() {
+                System.out.println("流被取消了...");
+            }
+
+            @Override
+            protected void hookFinally(SignalType type) {
+                System.out.println("最終回調...，一定會被執行");
+            }
+        });
+    }
+
+    public static void fluxMono(String[] args) {
 //        Flux.concat(Flux.just(1, 2, 3), Flux.just(7, 8, 9))
 //                .subscribe(System.out::println);
 
@@ -27,6 +108,8 @@ public class FluxDemo {
                 .map(i -> "haha-" + i)
                 // .log() // onNext(haha-4~7)
                 .subscribe(System.out::println);
+
+        // 今天： Flux、Mono：彈珠圖、事件感知 API 每個操作都是操作上個流的東西
     }
 
     /**
