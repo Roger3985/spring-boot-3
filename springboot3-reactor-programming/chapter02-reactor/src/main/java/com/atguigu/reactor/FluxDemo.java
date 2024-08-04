@@ -13,8 +13,11 @@ import java.time.Duration;
  */
 public class FluxDemo {
 
+    // Mono<Integer>: 只有一個 Integer
+    // Flux<Integer>: 有很多個 Integer
     public static void main(String[] args) {
-
+        Mono<Integer> just = Mono.just(1);
+        just.subscribe(System.out::println);
     }
 
     // 測試 Flux
