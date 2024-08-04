@@ -18,13 +18,36 @@ import java.util.List;
 public class FluxDemo {
 
     public static void main(String[] args) {
-        new FluxDemo().buffer();
+        new FluxDemo().limit();
         // request(N) : 找發佈者請求 N 次資料：總共能得到： N * bufferSize 個資料
+    }
+
+    // 限流
+    public void limit() {
+         Flux.range(1, 1000)
+             .log() // 限流觸發，看上游是怎麼限流獲取資料的
+                .limitRate(100) // 一次預取 100 個元素，第一次 request(100)，以後 request(75)
+                    .subscribe(new BaseSubscriber<Integer>() {
+                        @Override
+                        protected void hookOnSubscribe(Subscription subscription) {
+                            request(1); // 取一次
+                        }
+
+                        @Override
+                        protected void hookOnNext(Integer value) {
+                            System.out.println(value);
+                            request(1);
+                        }
+                    });
+
+         // 75% 預取策略: limitRate(100)
+         // 第一次抓取 100 個元素，如果 75% 的元素已經處理過了，繼續抓取新的 75% 元素;
     }
 
     public void buffer() {
         Flux<List<Integer>> buffer = Flux.range(1, 10) // 原始流 10 個
-                .buffer(2);// 添加了緩衝區：緩衝了 2(n) 個元素，消費者一次最多可以拿到三個元素; 湊滿數量之後批量給消費者
+                .buffer(2)// 添加了緩衝區：緩衝了 2(n) 個元素，消費者一次最多可以拿到三個元素; 湊滿數量之後批量給消費者
+                        .log();
 
         // 尚未使用 buffer 前，一次發一個，一個一個發;
 
