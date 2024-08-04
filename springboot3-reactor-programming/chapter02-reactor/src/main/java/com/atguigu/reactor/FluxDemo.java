@@ -16,6 +16,19 @@ import java.time.Duration;
  */
 public class FluxDemo {
 
+    public static void main(String[] args) {
+//        Flux.concat(Flux.just(1, 2, 3), Flux.just(7, 8, 9))
+//                .subscribe(System.out::println);
+
+        Flux.range(1, 7)
+                .log() // 日誌
+                .filter(i -> i > 3) // 挑出 > 3 的元素
+                // .log() // onNext(4~7)
+                .map(i -> "haha-" + i)
+                // .log() // onNext(haha-4~7)
+                .subscribe(System.out::println);
+    }
+
     /**
      * 響應式編程核心：看懂文檔彈珠圖
      * 信號：正常 / 異常（取消、錯誤...）
