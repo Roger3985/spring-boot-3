@@ -14,9 +14,29 @@ import java.util.stream.Stream;
  */
 public class APITest {
 
+    void error() {
+        Flux.just(1, 2, 3)
+                .map(i -> "100 / " + i + " = " + (100 / i))
+                .onErrorReturn("Divided by zero :(")
+                .subscribe(v -> System.out.println("v = " + v));
+    }
+
+    /**
+     * zip: 無法結隊的元素會被忽略
+     * 最多支持8流壓縮
+     */
     @Test
     void zip() {
-
+        // Tuple: 陣列
+        // Tuple2: <Integer, Integer>
+        Flux.just(1, 2, 3)
+                .zipWith(Flux.just(4, 5, 6))
+//                .map(tuple -> {
+//                    Integer t1 = tuple.getT1(); // 陣列中的第一個元素
+//                    Integer t2 = tuple.getT2 (); // 陣列中的第二個元素
+//                })
+                .log()
+                .subscribe();
     }
 
     /**
