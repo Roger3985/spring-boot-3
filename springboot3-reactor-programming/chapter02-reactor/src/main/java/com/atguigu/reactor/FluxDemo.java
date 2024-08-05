@@ -17,9 +17,19 @@ import java.util.concurrent.atomic.AtomicReference;
 public class FluxDemo {
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        new FluxDemo().create();
+        new FluxDemo().handle();
         // request(N) : 找發佈者請求 N 次資料：總共能得到： N * bufferSize 個資料
         System.in.read();
+    }
+
+    public void handle() {
+        Flux.range(1, 10)
+                .handle((value, sink) -> {
+                    System.out.println("拿到的值" + value);
+                    sink.next("張三：" +value); // 可以向下發送資料的通道
+                })
+                .log() // 日誌
+                .subscribe();
     }
 
     public void create() throws InterruptedException {
