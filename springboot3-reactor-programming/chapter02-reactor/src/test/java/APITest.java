@@ -17,6 +17,17 @@ public class APITest {
      * onNext(4): 每個資料到達
      * onComplete: 流結束
      */
+    @Test // 扁平化
+    void flatMap() {
+        Flux.just("zhang san", "li si")
+                .flatMap(v -> {
+                    String[] s = v.split(" ");
+                    return Flux.fromArray(s); // 把資料包裝成多元素流
+                }) // 兩個人的名字，按照空格區分，打印出所有的姓名
+                .log()
+                .subscribe();
+    }
+
     @Test
     void filter() {
         Stream.of(1, 2, 3, 4);
