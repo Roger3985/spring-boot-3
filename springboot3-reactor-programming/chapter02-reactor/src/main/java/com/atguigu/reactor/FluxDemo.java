@@ -3,10 +3,14 @@ package com.atguigu.reactor;
 import org.reactivestreams.Subscription;
 import reactor.core.Disposable;
 import reactor.core.publisher.*;
+import reactor.core.scheduler.Schedulers;
 
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -28,12 +32,25 @@ public class FluxDemo {
 
     public void handle() {
         Flux.range(1, 10)
-                .handle((value, sink) -> {
-                    System.out.println("拿到的值" + value);
-                    sink.next("張三：" +value); // 可以向下發送資料的通道
-                })
+//                .handle((value, sink) -> {
+//                    System.out.println("拿到的值" + value);
+//                    sink.next("張三：" +value); // 可以向下發送資料的通道
+//                })
+                .publishOn(Schedulers.immediate()) // 在哪個執行敘池把這個流的資料跟操作給執行了 // 默認就是使用 Schedulers.immediate
                 .log() // 日誌
                 .subscribe();
+
+        // publishOn: 改變發布者所在的執行緒池
+        // subscribeOn: 改變訂閱者所在執行緒池
+
+        // 調度器:線程池
+//        Schedulers.immediate(); // 默認: 無執行上下文，當前執行續運行所有操作
+//        Schedulers.single(); // 使用一個固定的單執行續
+//        Schedulers.boundedElastic(); // 有限的，彈性調度，不限無限擴充的執行緒池，
+//        執行敘池中有 10 * CPU 執行敘池，佇列默認 100 K，keepAliveTime: 60s
+        Schedulers.fromExecutor(new ThreadPoolExecutor(4, 8, 60, TimeUnit.SECONDS, new LinkedBlockingDeque<>(1000)))
+
+
     }
 
     public void create() throws InterruptedException {
