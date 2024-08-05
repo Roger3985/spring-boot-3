@@ -16,7 +16,32 @@ public class APITest {
      * onNext(2): 每個資料到達
      * onNext(4): 每個資料到達
      * onComplete: 流結束
+     * concatMap: 一個元素可以變很多單個 (對於元素類型無限制)
+     *  - concat: Flux.concat
+     *  - concatWith: 連接的流要跟老流中的元素類型要一樣。
      */
+    @Test
+    void concatMap() {
+
+        Flux.just(1, 2)
+                        .concatWith(Flux.just(4, 5, 6))
+                                .log()
+                                        .subscribe();
+
+        // 連接
+        Flux.concat(Flux.just(1, 2), Flux.just("h", "j"), Flux.just("haha", "hehe"))
+                        .log()
+                                .subscribe();
+
+        // Mono、Flux: 資料的發布者
+        Flux.just(1, 2)
+                .concatMap(s -> {
+                    return Flux.just(s + "-> a", 1);
+                })
+                .log()
+                .subscribe();
+    }
+
     @Test // 扁平化
     void flatMap() {
         Flux.just("zhang san", "li si")
