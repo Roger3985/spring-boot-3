@@ -18,6 +18,6 @@ scrape_configs:
   - job_name: 'spring-boot-demo'
     metrics_path: '/actuator/prometheus' # 指定抓取的路徑
     static_configs:
-      - targets: ['10.89.1.13:9999']
+      - targets: ['10.89.1.3:9999']
         labels:
           nodename: 'app-demo'

@@ -2,6 +2,8 @@ import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.io.IOException;
+import java.time.Duration;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
@@ -18,11 +20,31 @@ public class APITest {
     }
 
     /**
-     * merge、mergeWith：靜態兜底資料
-     * mergeSequential：空轉換；調用動態兜底方法；返回兜底資料
+     * concat: 連接；A 流，所有元素和 B 流所有元素拼接
+     * merge: 合併：A 流，所有元素和 B 流所有元素按照時間合併
+     * mergeWith
+     * mergeSequential：按照哪個流先發元素排隊
      */
     @Test
-    void merge() {
+    void merge() throws IOException {
+        Flux.merge(
+                Flux.just(1, 2, 3).delayElements(Duration.ofSeconds(1)),
+                Flux.just("a", "b").delayElements(Duration.ofMillis(1500)),
+                Flux.just("haha", "hehe", "heihei", "xixi® ").delayElements(Duration.ofMillis(800)))
+                .log()
+                .subscribe();
+
+        Flux.just(1, 2, 3).mergeWith(Flux.just(4, 5, 6));
+
+        System.in.read();
+    }
+
+    /**
+     * defaultIfEmpty：靜態兜底資料
+     * switchIfEmpty：空轉換；調用動態兜底方法；返回兜底資料
+     */
+    @Test
+    void empty() {
         // Mono.just(null); // 流裡面有一個 null 值元素
         // Mono.empty(); // 流裡面沒有元素，只有一個完成信號/結束信號
         haha()
@@ -34,13 +56,6 @@ public class APITest {
         return Mono.just("a");
     }
 
-    /**
-     * defaultIfEmpty、switchIfEmpty
-     */
-    @Test
-    void empty() {
-
-    }
 
     /**
      * transform
@@ -75,7 +90,7 @@ public class APITest {
      * onNext(4): 每個資料到達
      * onComplete: 流結束
      * concatMap: 一個元素可以變很多單個 (對於元素類型無限制)
-     *  - concat: Flux.concat
+     *  - concat: Flux.concat;靜態調用
      *  - concatWith: 連接的流要跟老流中的元素類型要一樣。
      */
     @Test
