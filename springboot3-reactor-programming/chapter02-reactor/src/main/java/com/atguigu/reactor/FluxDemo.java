@@ -57,10 +57,10 @@ public class FluxDemo {
     }
 
     // 自定義流中元素處理規則
-    public void handle() {
-        Flux.range(1, 10)
-                .
-    }
+//    public void handle() {
+//        Flux.range(1, 10)
+//                .
+//    }
 
     public void create() throws InterruptedException {
 

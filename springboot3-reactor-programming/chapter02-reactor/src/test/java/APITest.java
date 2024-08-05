@@ -31,6 +31,8 @@ public class APITest {
                     }
                 });
 
+        // transform 無 defer，不會共享外部變量的值 無狀態轉換；原理，無論多少訂閱者，transform 只執行一次
+        // transform 有 defer，會共享外部變量的值   有狀態轉換；原理，無論多少訂閱者，每個訂閱者 transform 都會執行一次
         flux.subscribe(v -> System.out.println("訂閱者1: v = " + v));
         flux.subscribe(v -> System.out.println("訂閱者2: v = " + v));
     }
