@@ -22,6 +22,10 @@ public class FluxDemo {
         System.in.read();
     }
 
+    public void thread() {
+        // 響應式編程: 全異步、消息、事件回調
+    }
+
     public void handle() {
         Flux.range(1, 10)
                 .handle((value, sink) -> {
