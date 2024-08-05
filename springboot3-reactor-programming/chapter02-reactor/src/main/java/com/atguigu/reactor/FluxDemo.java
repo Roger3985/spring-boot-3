@@ -48,7 +48,7 @@ public class FluxDemo {
 //        Schedulers.single(); // 使用一個固定的單執行續
 //        Schedulers.boundedElastic(); // 有限的，彈性調度，不限無限擴充的執行緒池，
 //        執行敘池中有 10 * CPU 執行敘池，佇列默認 100 K，keepAliveTime: 60s
-        Schedulers.fromExecutor(new ThreadPoolExecutor(4, 8, 60, TimeUnit.SECONDS, new LinkedBlockingDeque<>(1000)))
+        Schedulers.fromExecutor(new ThreadPoolExecutor(4, 8, 60, TimeUnit.SECONDS, new LinkedBlockingDeque<>(1000)));
 
 
     }
