@@ -50,6 +50,9 @@ public class FluxDemo {
 //        執行敘池中有 10 * CPU 執行敘池，佇列默認 100 K，keepAliveTime: 60s
         Schedulers.fromExecutor(new ThreadPoolExecutor(4, 8, 60, TimeUnit.SECONDS, new LinkedBlockingDeque<>(1000)));
 
+        // 只要不指定執行緒池，默認發布者用的執行敘池就是訂閱者的執行敘池
+        // 流的每個操作都會產生新流，產生新的發布者
+
 
     }
 
