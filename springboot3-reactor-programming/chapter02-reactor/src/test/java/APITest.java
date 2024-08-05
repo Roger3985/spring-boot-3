@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 /**
@@ -9,6 +10,30 @@ import java.util.stream.Stream;
  * @create 2024-08-05
  */
 public class APITest {
+
+    /**
+     * transform
+     * transformdefer
+     */
+    @Test
+    void transform() { // 把流變形成新資料
+        AtomicInteger atomic = new AtomicInteger();
+
+        Flux<String> flux = Flux.just("a", "b", "c")
+                .transform(values -> {
+                    // ++atomic
+                    if (atomic.incrementAndGet() == 1) {
+                        // 如果是: 第一次調用，老流中的所有元素轉成大寫
+                        return values.map(String::toUpperCase);
+                    } else {
+                        // 如果不是第一次調用，原封不動返回
+                        return values;
+                    }
+                });
+
+        flux.subscribe(v -> System.out.println("訂閱者1: v = " + v));
+        flux.subscribe(v -> System.out.println("訂閱者2: v = " + v));
+    }
 
     /**
      * onSubscribe: 流被訂閱
