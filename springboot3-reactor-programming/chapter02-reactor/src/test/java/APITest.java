@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
@@ -10,6 +11,36 @@ import java.util.stream.Stream;
  * @create 2024-08-05
  */
 public class APITest {
+
+    @Test
+    void zip() {
+
+    }
+
+    /**
+     * merge、mergeWith：靜態兜底資料
+     * mergeSequential：空轉換；調用動態兜底方法；返回兜底資料
+     */
+    @Test
+    void merge() {
+        // Mono.just(null); // 流裡面有一個 null 值元素
+        // Mono.empty(); // 流裡面沒有元素，只有一個完成信號/結束信號
+        haha()
+                .defaultIfEmpty("x") // 如果發佈者元素為 null，指定默認值，否則用發佈者的值
+                .subscribe(v -> System.out.println("v = " + v));
+    }
+
+    Mono<String> haha() {
+        return Mono.just("a");
+    }
+
+    /**
+     * defaultIfEmpty、switchIfEmpty
+     */
+    @Test
+    void empty() {
+
+    }
 
     /**
      * transform
