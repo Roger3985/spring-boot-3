@@ -26,55 +26,57 @@ public class APITest {
         java 錯誤處理
      */
     @Test
-    void error() {
-        Flux.just(1, 2, 3)
-                .map(i -> "100 / " + i + " = " + (100 / i)) // this triggers on error with 0
-                .onErrorReturn("Divided by zero :(")
-                .subscribe(v -> System.out.println("v = " + v),
-                           error -> System.out.println("error" + error),
-                           () -> System.out.println("流結束")); // error handling example
+    void error() throws IOException {
+//        Flux.just(1, 2, 3)
+//                .map(i -> "100 / " + i + " = " + (100 / i)) // this triggers on error with 0
+//                .onErrorReturn("Divided by zero :(")
+//                .subscribe(v -> System.out.println("v = " + v),
+//                           error -> System.out.println("error" + error),
+//                           () -> System.out.println("流結束")); // error handling example
+//
+//        Flux<String> map = Flux.just(1, 2, 0, 4)
+//                .map(i -> "100 / " + i + " = " + (100 / i));
+//        map.onErrorResume(error -> Mono.just("hehe-777"))
+//                .subscribe(v -> System.out.println("v = " + v),
+//                        error -> System.out.println("error" + error),
+//                        () -> System.out.println("流結束"));
+//
+//        Flux.just(1, 2, 0, 4)
+//                .map(i -> "100 / " + i + " = " + (100 / i))
+//                .onErrorResume(error -> Flux.error(new BusinessException(error.getMessage() + "炸了")))
+//                        .subscribe(v -> System.out.println("v = " + v),
+//                                error -> System.out.println("error" + error),
+//                                () -> System.out.println("流結束"));
+//
+//        Flux.just(1, 2, 0, 4)
+//                .map(i -> "100 / " + i + " = " + (100 / i))
+//                .onErrorMap(error -> new BusinessException(error.getMessage()))
+//                .doFinally(signalType -> {
+//                    System.out.println("流信號: " + signalType);
+//                })
+//                .subscribe(v -> System.out.println("v = " + v),
+//                        error -> System.out.println("error" + error),
+//                        () -> System.out.println("流結束"));
+//
+//        Flux.just(1, 2, 3, 4, 5, 0)
+//                .map(i -> 10 / i)
+//                .onErrorContinue((error, value) -> {
+//                    System.out.println("error: " + error);
+//                    System.out.println("value: " + value);
+//                    System.out.println("發現有" + value + "有問題了，繼續執行其他的，我會記錄這個問題");
+//                }) // 發生錯誤繼續
+//                .subscribe(v -> System.out.println("v = " + v),
+//                        error -> System.out.println("error" + error));
 
-        Flux<String> map = Flux.just(1, 2, 0, 4)
-                .map(i -> "100 / " + i + " = " + (100 / i));
-        map.onErrorResume(error -> Mono.just("hehe-777"))
-                .subscribe(v -> System.out.println("v = " + v),
-                        error -> System.out.println("error" + error),
-                        () -> System.out.println("流結束"));
-
-        Flux.just(1, 2, 0, 4)
-                .map(i -> "100 / " + i + " = " + (100 / i))
-                .onErrorResume(error -> Flux.error(new BusinessException(error.getMessage() + "炸了")))
-                        .subscribe(v -> System.out.println("v = " + v),
-                                error -> System.out.println("error" + error),
-                                () -> System.out.println("流結束"));
-
-        Flux.just(1, 2, 0, 4)
-                .map(i -> "100 / " + i + " = " + (100 / i))
-                .onErrorMap(error -> new BusinessException(error.getMessage()))
-                .doFinally(signalType -> {
-                    System.out.println("流信號: " + signalType);
-                })
-                .subscribe(v -> System.out.println("v = " + v),
-                        error -> System.out.println("error" + error),
-                        () -> System.out.println("流結束"));
-
-        Flux.just(1, 2, 3, 4, 5, 0)
-                .map(i -> 10 / i)
-                .onErrorContinue((error, value) -> {
-                    System.out.println("error: " + error);
-                    System.out.println("value: " + value);
-                    System.out.println("發現有" + value + "有問題了，繼續執行其他的，我會記錄這個問題");
-                }) // 發生錯誤繼續
-                .subscribe(v -> System.out.println("v = " + v),
-                        error -> System.out.println("error" + error));
-
-        Flux.just(1, 2, 3, 4, 5, 0)
-                .map(i -> 10 / i)
-                .onErrorStop()
-                .onErrorComplete()
+        Flux.interval(Duration.ofSeconds(1))
+                .map(i -> 10 / (i - 10))
+                .onErrorStop() // 錯誤後停止流，源頭中斷
+                // .onErrorComplete() // 錯誤結束信號，替換為正常結束信號
                 .subscribe(v -> System.out.println("v = " + v),
                         error -> System.out.println("error" + error),
                         () -> System.out.println("流正常結束"));
+
+        System.in.read();
     }
 
     class BusinessException extends RuntimeException {
