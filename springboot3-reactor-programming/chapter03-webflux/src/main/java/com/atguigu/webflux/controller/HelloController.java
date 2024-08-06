@@ -1,10 +1,13 @@
 package com.atguigu.webflux.controller;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.time.Duration;
 
 /**
  * @author Roger
@@ -35,5 +38,18 @@ public class HelloController {
     public Flux<String> hehe() {
         return Flux.just("hehe1", "hehe2");
     }
+
+    // test / event-stream
+    // SSE 測試: chatgpt 都在用
+    @GetMapping(value = "/sse", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<String> sse() {
+        return Flux.range(1, 10)
+                .map(i -> "ha" + i)
+                .delayElements(Duration.ofMillis(500))
+                .cache(10);
+    }
+
+    // SpringMVC: 以前怎麼用，基本可以無縫切換
+    // 底層：需要自己開始編寫響應式代碼
 
 }
