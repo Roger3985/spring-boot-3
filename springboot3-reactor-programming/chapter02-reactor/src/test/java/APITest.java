@@ -6,6 +6,7 @@ import reactor.core.publisher.Sinks;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
@@ -16,6 +17,20 @@ import java.util.stream.Stream;
  * @create 2024-08-05
  */
 public class APITest {
+
+    @Test
+    void block() {
+        Integer integer = Flux.just(1, 2, 4)
+                .map(i -> i + 10)
+                .blockLast();
+
+        List<Integer> integers = Flux.just(1, 2, 4)
+                .map(i -> i + 10)
+                .collectList()
+                .block(); // 也是一種訂閱者， BlockingMonoSubscriber
+
+        System.out.println("integers: " + integers);
+    }
 
     @Test
     void sinks() throws InterruptedException, IOException {
