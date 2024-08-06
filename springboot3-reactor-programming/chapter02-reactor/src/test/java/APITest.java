@@ -14,11 +14,20 @@ import java.util.stream.Stream;
  */
 public class APITest {
 
+    /*
+        默認: 錯誤是一種中斷行為
+        ->　subscribe: 消費者可以感知 正常元素 與 流發生的錯誤 catch
+        更多的錯誤處理
+        java 錯誤處理
+     */
+    @Test
     void error() {
         Flux.just(1, 2, 3)
-                .map(i -> "100 / " + i + " = " + (100 / i))
+                .map(i -> "100 / " + i + " = " + (100 / i)) // this triggers on error with 0
                 .onErrorReturn("Divided by zero :(")
-                .subscribe(v -> System.out.println("v = " + v));
+                .subscribe(v -> System.out.println("v = " + v),
+                           error -> System.out.println("error" + error),
+                           () -> System.out.println("流結束")); // error handling example
     }
 
     /**
