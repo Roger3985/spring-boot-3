@@ -3,6 +3,7 @@ import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Sinks;
+import reactor.core.scheduler.Schedulers;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -18,7 +19,20 @@ import java.util.stream.Stream;
  */
 public class APITest {
 
-    void parallelFlux() {
+    @Test
+    void parallelFlux() throws IOException {
+
+        // 百萬資料，8 個執行緒
+        Flux.range(1, 10000)
+                .buffer(100)
+                .parallel(8)
+                .runOn(Schedulers.newParallel("yy"))
+                .log()
+                .flatMap(list -> Flux.fromIterable(list))
+                .collectSortedList(Integer::compareTo)
+                .subscribe(v -> System.out.println("v = " + v));
+
+        System.in.read();
 
     }
 
