@@ -42,7 +42,26 @@ public class APITest {
                     throw new RuntimeException(e);
                 }
             }
-        });
+        }).start();
+
+        // 發佈者資料重放，底層利用對列進行緩存之前資料
+        Sinks.Many<Object> many1 = Sinks.many().replay().limit(3);
+        
+        new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                many1.tryEmitNext("a-" + i);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }).start();
+
+        Flux.range(1, 10)
+                .delayElements(Duration.ofSeconds(1))
+                .cache(3) // 緩存元素
+                .subscribe(v -> System.out.println("v = " + v));
 
         // 訂閱
         many.asFlux().subscribe(v -> System.out.println("v: " + v));
