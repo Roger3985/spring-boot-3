@@ -14,6 +14,20 @@ import java.util.stream.Stream;
  */
 public class APITest {
 
+    @Test
+    void retryAndTimeout() throws IOException {
+        Flux.just(1, 2, 3)
+                .delayElements(Duration.ofSeconds(3))
+                .log()
+                .timeout(Duration.ofSeconds(1))
+                .retry(3) // 把流從頭到尾重新請求一次
+                .map(i -> i + "haha")
+                .log()
+                .subscribe();
+
+        System.in.read();
+    }
+
     void createOrder() {
         // 1. 較驗訂單，價格有問題
         // 只需要敲正確的業務代碼，所有的業務異常，全部拋出我們自定義的異常，由全局異常處理器進行統一處理
