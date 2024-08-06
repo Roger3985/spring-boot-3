@@ -19,6 +19,8 @@ import java.util.stream.Stream;
  */
 public class APITest {
 
+    // Context-API: https://projectreactor.io/docs/core/release/reference/#context
+
     @Test
     void parallelFlux() throws IOException {
 
