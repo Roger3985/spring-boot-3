@@ -14,6 +14,11 @@ import java.util.stream.Stream;
  */
 public class APITest {
 
+    void createOrder() {
+        // 1. 較驗訂單，價格有問題
+        // 只需要敲正確的業務代碼，所有的業務異常，全部拋出我們自定義的異常，由全局異常處理器進行統一處理
+    }
+
     /*
         默認: 錯誤是一種中斷行為
         ->　subscribe: 消費者可以感知 正常元素 與 流發生的錯誤 catch
@@ -28,6 +33,41 @@ public class APITest {
                 .subscribe(v -> System.out.println("v = " + v),
                            error -> System.out.println("error" + error),
                            () -> System.out.println("流結束")); // error handling example
+
+        Flux<String> map = Flux.just(1, 2, 0, 4)
+                .map(i -> "100 / " + i + " = " + (100 / i));
+        map.onErrorResume(error -> Mono.just("hehe-777"))
+                .subscribe(v -> System.out.println("v = " + v),
+                        error -> System.out.println("error" + error),
+                        () -> System.out.println("流結束"));
+
+        Flux.just(1, 2, 0, 4)
+                .map(i -> "100 / " + i + " = " + (100 / i))
+                .onErrorResume(error -> Flux.error(new BusinessException(error.getMessage() + "炸了")))
+                        .subscribe(v -> System.out.println("v = " + v),
+                                error -> System.out.println("error" + error),
+                                () -> System.out.println("流結束"));
+
+        Flux.just(1, 2, 0, 4)
+                .map(i -> "100 / " + i + " = " + (100 / i))
+                .onErrorMap(error -> new BusinessException(error.getMessage()))
+                .subscribe(v -> System.out.println("v = " + v),
+                        error -> System.out.println("error" + error),
+                        () -> System.out.println("流結束"));
+    }
+
+    class BusinessException extends RuntimeException {
+        public BusinessException(String msg) {
+            super(msg);
+        }
+    }
+
+    Mono<String> haha(Throwable throwable) {
+        if (throwable.getClass() == NullPointerException.class) {
+
+        }
+
+        return Mono.just("哈哈" + throwable.getMessage());
     }
 
     /**
