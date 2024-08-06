@@ -4,6 +4,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Sinks;
 import reactor.core.scheduler.Schedulers;
+import reactor.util.context.Context;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -20,6 +21,34 @@ import java.util.stream.Stream;
 public class APITest {
 
     // Context-API: https://projectreactor.io/docs/core/release/reference/#context
+    @Test // ThreadLocal 在響應式編程中無法使用
+    // 響應式編程中，資料流期間共享資料， Context API: Context: 讀寫 ContextView: 只讀
+    void threadlocal() {
+//        Flux<Integer> just = Flux.just(1, 2, 3);
+//        just.map(i -> {
+//            System.out.println("i = " + i);
+//            return i + 10;
+//        })
+//                 // 下游能拿到下游最近一次的資料
+//                .contextWrite(Context.of("prefix", "哈哈")) // ThreadLocal 共享了資料，上游的所有人都能看到 Context 由下游傳遞給上游
+//                .subscribe(v -> System.out.println("v = " + v));
+
+        Flux.just(1, 2, 3)
+                .transformDeferredContextual((flux, context) -> {
+                    System.out.println("flux = " + flux);
+                    System.out.println("context = " + context);
+                    return flux.map(i -> i + "==>" + context.get("prefix"));
+                })
+                .contextWrite(Context.of("prefix", "哈哈"))
+                .subscribe(v -> System.out.println("v = " + v));
+
+        // 以前 命令式編程
+        // controller -> service -> dao
+
+        // 現在響應式編成
+        // dao -> service -> controller; 從下游反向傳播
+        // example: dao(10: 資料源) -> service(10) -> controller(10)
+    }
 
     @Test
     void parallelFlux() throws IOException {
