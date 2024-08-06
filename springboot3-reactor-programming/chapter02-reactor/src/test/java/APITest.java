@@ -18,6 +18,10 @@ import java.util.stream.Stream;
  */
 public class APITest {
 
+    void parallelFlux() {
+
+    }
+
     @Test
     void block() {
         Integer integer = Flux.just(1, 2, 4)
