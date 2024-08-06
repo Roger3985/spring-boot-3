@@ -67,6 +67,14 @@ public class APITest {
                 }) // 發生錯誤繼續
                 .subscribe(v -> System.out.println("v = " + v),
                         error -> System.out.println("error" + error));
+
+        Flux.just(1, 2, 3, 4, 5, 0)
+                .map(i -> 10 / i)
+                .onErrorStop()
+                .onErrorComplete()
+                .subscribe(v -> System.out.println("v = " + v),
+                        error -> System.out.println("error" + error),
+                        () -> System.out.println("流正常結束"));
     }
 
     class BusinessException extends RuntimeException {
