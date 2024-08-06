@@ -51,9 +51,22 @@ public class APITest {
         Flux.just(1, 2, 0, 4)
                 .map(i -> "100 / " + i + " = " + (100 / i))
                 .onErrorMap(error -> new BusinessException(error.getMessage()))
+                .doFinally(signalType -> {
+                    System.out.println("流信號: " + signalType);
+                })
                 .subscribe(v -> System.out.println("v = " + v),
                         error -> System.out.println("error" + error),
                         () -> System.out.println("流結束"));
+
+        Flux.just(1, 2, 3, 4, 5, 0)
+                .map(i -> 10 / i)
+                .onErrorContinue((error, value) -> {
+                    System.out.println("error: " + error);
+                    System.out.println("value: " + value);
+                    System.out.println("發現有" + value + "有問題了，繼續執行其他的，我會記錄這個問題");
+                }) // 發生錯誤繼續
+                .subscribe(v -> System.out.println("v = " + v),
+                        error -> System.out.println("error" + error));
     }
 
     class BusinessException extends RuntimeException {
