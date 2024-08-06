@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Test;
+import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Sinks;
@@ -58,10 +59,17 @@ public class APITest {
             }
         }).start();
 
-        Flux.range(1, 10)
+        Disposable cache = Flux.range(1, 10)
                 .delayElements(Duration.ofSeconds(1))
                 .cache(3) // 緩存元素
                 .subscribe(v -> System.out.println("v = " + v));
+
+        Flux<Integer> cache1 = Flux.range(1, 10)
+                .delayElements(Duration.ofSeconds(1)) // 不調緩存默認就是緩存所有
+                .cache(2); // 緩存兩個元素
+
+        cache1.subscribe(); // 緩存元素;
+
 
         // 訂閱
         many.asFlux().subscribe(v -> System.out.println("v: " + v));
