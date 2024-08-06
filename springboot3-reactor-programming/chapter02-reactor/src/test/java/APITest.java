@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.publisher.Sinks;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -15,12 +16,24 @@ import java.util.stream.Stream;
 public class APITest {
 
     @Test
+    void sinks() {
+        Sinks.many(); // 發送 Flux 資料
+        Sinks.one(); // 發送 Mono 資料
+
+        // Sinks: 接收器，資料管道，所有資料通過這個資料往下走
+        Sinks.many().unicast(); // 單播: 這個管道只能綁定單個訂閱者(消費者)
+        Sinks.many().multicast(); // 多播: 這個管道能綁定多個訂閱者(消費者)
+        Sinks.many().replay(); // 重播: 這個管道能夠重放元素
+    }
+
+    @Test
     void retryAndTimeout() throws IOException {
         Flux.just(1, 2, 3)
                 .delayElements(Duration.ofSeconds(3))
                 .log()
                 .timeout(Duration.ofSeconds(1))
-                .retry(3) // 把流從頭到尾重新請求一次
+                .retry(3) // 把流從頭到尾重新請求一次，依照次數重複嘗試幾次
+                .onErrorReturn(2)
                 .map(i -> i + "haha")
                 .log()
                 .subscribe();
