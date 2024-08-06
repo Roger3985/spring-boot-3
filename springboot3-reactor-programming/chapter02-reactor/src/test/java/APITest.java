@@ -5,6 +5,7 @@ import reactor.core.publisher.Sinks;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
@@ -16,7 +17,7 @@ import java.util.stream.Stream;
 public class APITest {
 
     @Test
-    void sinks() {
+    void sinks() throws InterruptedException, IOException {
         Sinks.many(); // 發送 Flux 資料
         Sinks.one(); // 發送 Mono 資料
 
@@ -24,6 +25,29 @@ public class APITest {
         Sinks.many().unicast(); // 單播: 這個管道只能綁定單個訂閱者(消費者)
         Sinks.many().multicast(); // 多播: 這個管道能綁定多個訂閱者(消費者)
         Sinks.many().replay(); // 重播: 這個管道能夠重放元素
+
+        // 重頭消費，還是訂閱的那一刻消費;
+
+        Sinks.Many<Object> many = Sinks.many()
+                        .unicast() // 單播
+                .onBackpressureBuffer(new LinkedBlockingQueue<>(5)); // 背壓佇列
+
+
+        new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                many.tryEmitNext("a-" + i);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        // 訂閱
+        many.asFlux().subscribe(v -> System.out.println("v: " + v));
+
+        System.in.read();
     }
 
     @Test
