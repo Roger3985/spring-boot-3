@@ -4,6 +4,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.ServerSentEvent;
+import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,7 @@ import java.time.Duration;
  * @Description
  * @create 2024-08-06
  */
-@Controller
+@RestController
 public class HelloController {
 
     // Rendering: 一種視圖物件。
@@ -47,7 +48,9 @@ public class HelloController {
                         ServerWebExchange exchange,
                         WebSession webSession,
                         HttpMethod httpMethod,
-                        HttpEntity<String> entity) {
+                        HttpEntity<String> entity,
+                        FilePart file) {
+//        file.transferTo(); // 零拷貝技術
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
         Object aaa = webSession.getAttribute("aaa");
