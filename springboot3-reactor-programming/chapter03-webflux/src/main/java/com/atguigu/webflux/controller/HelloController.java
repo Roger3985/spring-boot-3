@@ -6,9 +6,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.result.view.Rendering;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebSession;
 import reactor.core.publisher.Flux;
@@ -22,8 +24,15 @@ import java.time.Duration;
  * @Description
  * @create 2024-08-06
  */
-@RestController
+@Controller
 public class HelloController {
+
+    // Rendering: 一種視圖物件。
+    @GetMapping("/google")
+    public Rendering render() {
+        // Rendering.redirectTo("/aaa"); // 重定向到當前項目根路徑下的 aaa
+        return Rendering.redirectTo("https://www.google.com/").build();
+    }
 
     @GetMapping("/haha")
     public Mono<String> haha() {
