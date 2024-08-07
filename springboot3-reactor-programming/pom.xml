@@ -19,6 +19,7 @@
         <module>chapter01-stream</module>
         <module>chapter02-reactor</module>
         <module>chapter03-webflux</module>
+        <module>chaptero4-r2dbc</module>
     </modules>
 
     <properties>
