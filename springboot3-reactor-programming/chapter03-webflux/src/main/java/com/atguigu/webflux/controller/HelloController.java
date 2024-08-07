@@ -1,10 +1,16 @@
 package com.atguigu.webflux.controller;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.ServerSentEvent;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebSession;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -28,7 +34,17 @@ public class HelloController {
 
     // Webflux：向下兼容原來 SpringMVC 的大多數註解和 API
     @GetMapping("/hello")
-    public String hello(@RequestParam(value = "key", required = false, defaultValue = "哈哈") String key) {
+    public String hello(@RequestParam(value = "key", required = false, defaultValue = "哈哈") String key,
+                        ServerWebExchange exchange,
+                        WebSession webSession,
+                        HttpMethod httpMethod,
+                        HttpEntity<String> entity) {
+        ServerHttpRequest request = exchange.getRequest();
+        ServerHttpResponse response = exchange.getResponse();
+        Object aaa = webSession.getAttribute("aaa");
+        Object put = webSession.getAttributes().put("aa", "nn");
+        String name = httpMethod.name();
+        String body = entity.getBody();
         return "Hello World!!! key = " + key;
     }
 
