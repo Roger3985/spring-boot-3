@@ -1,6 +1,7 @@
 package com.atguigu.webflux.controller;
 
 import org.springframework.http.MediaType;
+import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,5 +52,18 @@ public class HelloController {
 
     // SpringMVC: 以前怎麼用，基本可以無縫切換
     // 底層：需要自己開始編寫響應式代碼
+
+    public Flux<ServerSentEvent<String>> sse2() {
+        return Flux.range(1, 10)
+                .map(i -> {
+                    // 構建一個 SSE 物件
+                    return ServerSentEvent.builder("ha-" + i)
+                            .id(i + "")
+                            .comment("hei-" + i)
+                            .event("haha")
+                            .build();
+                })
+                .delayElements(Duration.ofMillis(500));
+    }
 
 }

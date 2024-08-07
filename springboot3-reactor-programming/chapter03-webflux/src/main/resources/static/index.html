@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>哈哈</h1>
-<button> 獲取資料 </button>
+<!--<button> 獲取資料 </button>-->
 <div id="app" style="width: 500px;height: 300px; background-color: gainsboro">
 
 </div>
@@ -21,6 +21,7 @@
             // console.log("progressEvent->", progressEvent.event.currentTarget.responseText)
             document.getElementById("app").innerText +=
                 progressEvent.event.currentTarget.responseType + "<br/>"
+            // responseText: 就是 sse 的完整資料
         },
     });
 
