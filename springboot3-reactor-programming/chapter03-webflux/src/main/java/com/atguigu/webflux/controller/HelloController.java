@@ -19,6 +19,13 @@ import java.time.Duration;
 @RestController
 public class HelloController {
 
+    @GetMapping("/haha")
+    public Mono<String> haha() {
+        return Mono.just(0)
+                .map(i -> 10 /i)
+                .map(i -> "哈哈" + i);
+    }
+
     // Webflux：向下兼容原來 SpringMVC 的大多數註解和 API
     @GetMapping("/hello")
     public String hello(@RequestParam(value = "key", required = false, defaultValue = "哈哈") String key) {
@@ -31,8 +38,8 @@ public class HelloController {
         2. 返回多個資料 Flux: Flux<Order>、Flux<User>、Flux<String>、Flux<Map>
         3. 配合 Flux，完成 SSE： Server Send Event; 服務端事件推送
      */
-    @GetMapping("/haha")
-    public Mono<String> haha() {
+    @GetMapping("/hahaTest")
+    public Mono<String> hahaTest() {
         return Mono.just("哈哈哈");
     }
 
