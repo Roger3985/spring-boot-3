@@ -20,6 +20,14 @@ import java.util.stream.Stream;
  */
 public class APITest {
 
+    @Test
+    void next() {
+        Integer block = Flux.just(1, 2, 3)
+                .next()// 直接觸發獲取元素，拿到流的第一個元素 找到第一個能處理這個請求的 handlerAdapter
+                .block();
+        System.out.println(block);
+    }
+
     // Context-API: https://projectreactor.io/docs/core/release/reference/#context
     @Test // ThreadLocal 在響應式編程中無法使用
     // 響應式編程中，資料流期間共享資料， Context API: Context: 讀寫 ContextView: 只讀
