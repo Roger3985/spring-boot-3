@@ -4,3 +4,8 @@ spring:
     username: root
     url: r2dbc:mysql://localhost:3306
     name: test
+
+logging:
+  level:
+    org:
+      springframework.r2dbc: debug
