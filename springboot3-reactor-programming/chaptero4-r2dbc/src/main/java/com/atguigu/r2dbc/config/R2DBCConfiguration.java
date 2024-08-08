@@ -20,7 +20,7 @@ public class R2DBCConfiguration {
     @Bean
     @ConditionalOnMissingBean // 替換容器中原來的
     public R2dbcCustomConversions conversions() {
-        // 把我們的轉換器加入進去
+        // 把我們的轉換器加入進去 // 效果新增了我們的 Converter
         return R2dbcCustomConversions.of(MySqlDialect.INSTANCE, new BookConverter());
     }
 }

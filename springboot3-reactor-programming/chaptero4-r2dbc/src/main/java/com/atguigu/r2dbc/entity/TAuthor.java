@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.util.List;
+
 /**
  * @author 2407009
  * @Description
@@ -17,4 +19,7 @@ import org.springframework.data.relational.core.mapping.Table;
 public class  TAuthor {
     private Long id;
     private String name;
+
+    // 1-N 如何封裝
+    private List<TBook> books;
 }

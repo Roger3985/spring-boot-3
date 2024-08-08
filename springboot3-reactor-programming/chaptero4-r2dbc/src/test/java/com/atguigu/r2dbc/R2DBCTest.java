@@ -1,6 +1,7 @@
 package com.atguigu.r2dbc;
 
 import com.atguigu.r2dbc.entity.TAuthor;
+import com.atguigu.r2dbc.entity.TBook;
 import com.atguigu.r2dbc.repositories.AuthorRepositories;
 import com.atguigu.r2dbc.repositories.BookRepositories;
 import org.junit.jupiter.api.Test;
@@ -44,12 +45,42 @@ public class R2DBCTest {
 //        bookRepositories.findAll()
 //                .subscribe(tBook -> System.out.println("tBook = " + tBook));
 
-        bookRepositories.findBookAndAuthor(1L)
-                        .subscribe(tBook -> System.out.println("tBook = " + tBook));
+//        bookRepositories.hahaAuthor(1L)
+//                        .subscribe(tBook -> System.out.println("tBook = " + tBook));
+        // 1:1 的第一種方式
+//        bookRepositories.hahaAuthor(1L)
+//                .subscribe(tBook -> System.out.println("tBook = " + tBook));
 
+        //  1：1 的第二種方式
+        databaseClient.sql("select b.*, t.name as name from t_book b" +
+                " LEFT JOIN t_author t on b.author_id = t.id " +
+                " WHERE b.id = ?")
+                .bind(0, 1L)
+                .fetch()
+                .all()
+                .map(row -> {
+                    String id = row.get("id").toString();
+                    String title = row.get("title").toString();
+                    String authorId = row.get("author_id").toString();
+                    String name = row.get("name").toString();
+                    TBook tBook = new TBook();
+                    tBook.setId(Long.parseLong(id));
+                    tBook.setTitle(title);
+
+                    TAuthor tAuthor = new TAuthor();
+                    tAuthor.setName(name);
+                    tAuthor.setId(Long.parseLong(id));
+
+                    tBook.setAuthor(tAuthor);
+
+                    return tBook;
+                })
+                .subscribe(tBook -> System.out.println("tBook = " + tBook));
         // 兩種辦法：
         // 1. 一次查詢出來，封裝好
         // 2. 兩次查詢
+
+        // 1:N：一個作者，可以查詢很多的圖書
 
         System.in.read();
     }

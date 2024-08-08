@@ -32,6 +32,6 @@ public class BookConverter implements Converter<Row, TBook> {
         tAuthor.setId(authorId);
         tAuthor.setName(source.get("name", String.class));
         tBook.setAuthor(tAuthor);
-        return
+        return null;
     }
 }
