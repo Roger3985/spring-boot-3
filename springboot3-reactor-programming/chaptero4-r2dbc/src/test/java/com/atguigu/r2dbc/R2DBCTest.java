@@ -1,6 +1,7 @@
 package com.atguigu.r2dbc;
 
 import com.atguigu.r2dbc.entity.TAuthor;
+import com.atguigu.r2dbc.repositories.AuthorRepositories;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +12,8 @@ import org.springframework.r2dbc.core.DatabaseClient;
 import reactor.core.publisher.Flux;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 /**
  * @author 2407009
@@ -27,6 +30,33 @@ public class R2DBCTest {
     // DatabaseClient 貼近底層，join 操作好做，複雜查詢好用
     @Autowired
     DatabaseClient databaseClient; // 資料庫客戶端
+
+    @Autowired
+    AuthorRepositories authorRepositories;
+
+    // 簡單查詢: 人家直接提供好介面
+    // 複雜條件查詢: 1. QBE API 2.自定義方法 3. 自定義 SQL
+
+    @Test
+    void authorRepositories() throws IOException {
+
+        // statement
+        // [SELECT t_author.id, t_author.name, FROM t_author WHERE t_author.id IN (?, ?)
+        // AND (t_author.name LIKE ?)] // 方法起名
+        authorRepositories.findAllByIdInAndNameLike(
+                Arrays.asList(1L, 2L),
+                "張%"
+        ).subscribe(tAuthor -> System.out.println("tAuthor = " + tAuthor));
+
+        // 自定義 @Query 註解
+        authorRepositories.findHaHa()
+                .subscribe(tAuthor -> System.out.println("tAuthor = " + tAuthor));
+         
+        authorRepositories.findAll()
+                .subscribe(tAuthor -> System.out.println("tAuthor = " + tAuthor));
+
+        System.in.read();
+    }
 
     @Test
     void r2dbcEntityTemplateTest() throws IOException {
