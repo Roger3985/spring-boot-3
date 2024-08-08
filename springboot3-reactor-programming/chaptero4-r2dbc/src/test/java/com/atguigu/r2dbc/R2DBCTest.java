@@ -11,9 +11,12 @@ import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.data.relational.core.query.Query;
 import org.springframework.r2dbc.core.DatabaseClient;
+import reactor.core.publisher.Flux;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author 2407009
@@ -39,6 +42,47 @@ public class R2DBCTest {
 
     // 簡單查詢: 人家直接提供好介面
     // 複雜條件查詢: 1. QBE API 2.自定義方法 3. 自定義 SQL
+
+    @Test
+    void oneToMany() throws IOException {
+//        databaseClient.sql("select a.id aid, a.name, b.* from t_author a " +
+//                "left join t_book b on a.id = b.author_id " +
+//                "order by  a.id")
+//                .fetch()
+//                .all()
+
+        // 1~6
+        // 1: false 2: false 3:false 4:true 5:false 6:false
+        // [1,2,3]
+        // [4]
+        // [5,6]
+        // bufferUntilChanged: 如果下一個判定值比起上一個發生了變化就開一個新的 buffer 保存，如果沒有變化就保存到原有的 buffer 中
+        Flux.just(1, 2, 3, 4, 5, 6)
+                .bufferUntilChanged(integer -> integer % 4 == 0) // 自帶分組
+                .subscribe(list -> System.out.println("list = " + list));
+
+        databaseClient.sql("select a.id aid, a.name,  b.* from t_author a " +
+                "left join t_book b on a.id = b.author_id " +
+                "order by a.id")
+                        .fetch()
+                                .all()
+                                        .bufferUntilChanged(rowMap -> Long.parseLong(rowMap.get("aid").toString())) // Long 數字緩存 -127 ~ 127
+                .map(list -> {
+                    TAuthor tAuthor = new TAuthor();
+                    Map<String, Object> map = list.get(0);
+                    tAuthor.setId(Long.parseLong(map.get("aid").toString()));
+                    tAuthor.setName(map.get("name").toString());
+                    // 查到的所有圖書
+                    list.stream()
+                                    .map(element -> {
+                                        return new TBook();
+                                    })
+                    tAuthor.setBooks();
+                })
+        // 物件比較需要自己寫好 equals 方法
+
+        System.in.read();
+    }
 
     @Test
     void author() throws IOException {
