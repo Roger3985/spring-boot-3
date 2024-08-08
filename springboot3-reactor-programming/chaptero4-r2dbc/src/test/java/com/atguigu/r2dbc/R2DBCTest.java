@@ -9,10 +9,8 @@ import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.data.relational.core.query.Query;
 import org.springframework.r2dbc.core.DatabaseClient;
-import reactor.core.publisher.Flux;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 /**
