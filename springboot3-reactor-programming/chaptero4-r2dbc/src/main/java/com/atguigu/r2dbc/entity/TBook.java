@@ -1,4 +1,4 @@
-package com.atguigu.webflux.entity;
+package com.atguigu.r2dbc.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,4 +23,6 @@ public class TBook {
     private String title;
     private Long authorId;
     private Instant publishTime; // 響應式中日期的映射使用 Instant 或者 LocalXxx
+
+    private TAuthor author; // 每本書有唯一作者
 }

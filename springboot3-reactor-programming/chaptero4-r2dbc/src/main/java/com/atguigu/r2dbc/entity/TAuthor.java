@@ -14,7 +14,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TAuthor {
+public class  TAuthor {
     private Long id;
     private String name;
 }

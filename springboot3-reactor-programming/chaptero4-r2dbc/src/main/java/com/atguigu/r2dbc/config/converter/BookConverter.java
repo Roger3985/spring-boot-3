@@ -1,4 +1,4 @@
-package com.atguigu.r2dbc.converter;
+package com.atguigu.r2dbc.config.converter;
 
 
 import com.atguigu.r2dbc.entity.TAuthor;
@@ -16,7 +16,7 @@ import java.time.Instant;
  *
  * 告訴 Spring Data 怎麼封裝 Book 物件
  */
-@ReadingConverter // 讀取資料庫資料的時候，把 row 轉成 TBook 把 row 轉成 TBook 
+@ReadingConverter // 讀取資料庫資料的時候，把 row 轉成 TBook 把 row 轉成 TBook
 public class BookConverter implements Converter<Row, TBook> {
 
     @Override

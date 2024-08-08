@@ -2,6 +2,7 @@ package com.atguigu.r2dbc;
 
 import com.atguigu.r2dbc.entity.TAuthor;
 import com.atguigu.r2dbc.repositories.AuthorRepositories;
+import com.atguigu.r2dbc.repositories.BookRepositories;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,8 +33,26 @@ public class R2DBCTest {
     @Autowired
     AuthorRepositories authorRepositories;
 
+    @Autowired
+    BookRepositories bookRepositories;
+
     // 簡單查詢: 人家直接提供好介面
     // 複雜條件查詢: 1. QBE API 2.自定義方法 3. 自定義 SQL
+
+    @Test
+    void book() throws IOException {
+//        bookRepositories.findAll()
+//                .subscribe(tBook -> System.out.println("tBook = " + tBook));
+
+        bookRepositories.findBookAndAuthor(1L)
+                        .subscribe(tBook -> System.out.println("tBook = " + tBook));
+
+        // 兩種辦法：
+        // 1. 一次查詢出來，封裝好
+        // 2. 兩次查詢
+
+        System.in.read();
+    }
 
     @Test
     void authorRepositories() throws IOException {
