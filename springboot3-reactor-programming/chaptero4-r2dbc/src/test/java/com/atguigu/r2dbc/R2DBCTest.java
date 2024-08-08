@@ -41,6 +41,14 @@ public class R2DBCTest {
     // 複雜條件查詢: 1. QBE API 2.自定義方法 3. 自定義 SQL
 
     @Test
+    void author() throws IOException {
+        authorRepositories.findById(1L)
+                .subscribe(tAuthor -> System.out.println("tAuthor = " + tAuthor));
+
+        System.in.read();
+    }
+
+    @Test
     void book() throws IOException {
 //        bookRepositories.findAll()
 //                .subscribe(tBook -> System.out.println("tBook = " + tBook));
@@ -138,7 +146,7 @@ public class R2DBCTest {
                     System.out.println("map = " + map);
                     String id = map.get("id").toString();
                     String name = map.get("name").toString();
-                    return new TAuthor(Long.parseLong(id), name);
+                    return new TAuthor(Long.parseLong(id), name, null);
                 })
                 .subscribe(tAuthor -> System.out.println("tAuthor = " + tAuthor));
 
