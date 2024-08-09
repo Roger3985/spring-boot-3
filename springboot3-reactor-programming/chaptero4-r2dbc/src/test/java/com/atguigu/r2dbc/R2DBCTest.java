@@ -15,8 +15,10 @@ import reactor.core.publisher.Flux;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author 2407009
@@ -61,25 +63,36 @@ public class R2DBCTest {
                 .bufferUntilChanged(integer -> integer % 4 == 0) // 自帶分組
                 .subscribe(list -> System.out.println("list = " + list));
 
-        databaseClient.sql("select a.id aid, a.name,  b.* from t_author a " +
-                "left join t_book b on a.id = b.author_id " +
-                "order by a.id")
-                        .fetch()
-                                .all()
-                                        .bufferUntilChanged(rowMap -> Long.parseLong(rowMap.get("aid").toString())) // Long 數字緩存 -127 ~ 127
+        Flux<TAuthor> flux = databaseClient.sql("select a.id aid, a.name,  b.* from t_author a " +
+                        "left join t_book b on a.id = b.author_id " +
+                        "order by a.id")
+                .fetch()
+                .all()
+                .bufferUntilChanged(rowMap -> Long.parseLong(rowMap.get("aid").toString())) // Long 數字緩存 -127 ~ 127
                 .map(list -> {
                     TAuthor tAuthor = new TAuthor();
                     Map<String, Object> map = list.get(0);
                     tAuthor.setId(Long.parseLong(map.get("aid").toString()));
                     tAuthor.setName(map.get("name").toString());
                     // 查到的所有圖書
-                    list.stream()
-                                    .map(element -> {
-                                        return new TBook();
-                                    })
-                    tAuthor.setBooks();
-                })
+                    List<TBook> tBooks = list.stream()
+                            .map(element -> {
+                                TBook tBook = new TBook();
+                                long id = Long.parseLong(element.get("id").toString());
+                                String title = element.get("title").toString();
+                                long author_id = Long.parseLong(element.get("author_id").toString());
+                                tBook.setId(id);
+                                tBook.setTitle(title);
+                                tBook.setAuthorId(author_id);
+                                return tBook;
+                            })
+                            .collect(Collectors.toUnmodifiableList());
+                    tAuthor.setBooks(tBooks);
+                    return tAuthor;
+                });
         // 物件比較需要自己寫好 equals 方法
+
+        flux.subscribe(tAuthor -> System.out.println("tAuthor = " + tAuthor));
 
         System.in.read();
     }

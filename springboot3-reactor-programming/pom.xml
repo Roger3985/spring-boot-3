@@ -20,6 +20,7 @@
         <module>chapter02-reactor</module>
         <module>chapter03-webflux</module>
         <module>chaptero4-r2dbc</module>
+        <module>chapter05-security</module>
     </modules>
 
     <properties>
